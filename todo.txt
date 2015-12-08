@@ -1,0 +1,44 @@
+TODO
+
+Liste perso des trucs à faire (R.J.)
+
+* Page d'accueil -> login ou register (ça je pense que ce sera simple),
+* Login -> trivial, juste des vérif à faire,
+* Register -> name, email, password,
+
+* Dashboard (quand pas de groupes enregistrés) -> dashboard épuré avec juste la proposition
+ de rajouter un groupe (vu que l'ajout de maisons bugge) + menu perso pour gestion du compte,
+
+ * Gestion du compte -> account setting, create group, fairness calculator (serieux, ça a l'air
+    trop dur ça), log out (on devrait y arriver).
+
+* Creation d'un groupe -> nom de groupe + personnes (nom + email)
+
+* Dashboard (quand groupe ajouté) -> 3 panneau. 1°: Dashboard, recent activities + add group et
+    add friend. 2°: liste des bills, 3°: que de la merde
+
+* Bill -> montant, comment, qui paye, method de partage (equal or unequal), date, image,
+    group concerné, avec qui on fait ça.
+
+* User -> name, email, phone, password, default currency, time zone, avatar +
+            notif -> add to group, add as friend, bill added, bill edited, comment on bill,
+                        bill due, pays me, monthly summary, major splitting news on update.
+            + advanced features -> fuck !
+
+* Group -> name + persons (nom + email) [je ne sais si elle doivent être inscrites]
+
+En résumé :
+- J'ai vraiment pas compris l'utilité du site,
+- Y'a vraiment des trucs super compliqués,
+- On pourra pas tous faire,
+- Non mais sérieux, il sert à quoi ce site ?
+- Il rame pas un peu, non ? Ah ben ouais, c'est fait en JavaEE,
+
+
+Remarques :
+- Bien gérer les ng-view, même si là, il y aura peu de switch entre view, le layout est
+    quasiment toujours le même. Si on veut pas se faire chier, on laisse toujours la barre
+    de menu en haut (plutôt que de la virer quand on doit ajouter un groupe),
+
+- Par contre, au vu de tout ce qu'on doit télécharger à cause de Yeoman, ne pourrait-ton pas
+    se passer de tout cela, et juste utiliser les trucs de base de AngularJS comme vu en cours ?
