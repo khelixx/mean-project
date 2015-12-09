@@ -1,0 +1,70 @@
+TODO
+
+Je mets ici juste les fonctionnalités qu'il serait bien que l'on fasse. Celles que j'omets seront à faire si on a du temps.. ahahahah
+
+* Page d'accueil -> login 
+* Login -> name, password, vérification des champs
+* Register -> name, email, password, vérification des champs
+* Un bouton pour switch entre login et register
+
+* Dashboard :
+	* sur la gauche :
+		-> ajout de groupes,
+		-> ajout d'amis,
+	* au milieu 3 infos :
+		-> ce que l'on doit, 
+		-> ce que l'on doit nous payer,
+		-> la différence (balance),
+
+* Ajout de groupes :
+	-> nom de groupe
+	-> ajout/suppression de personnes au groupre (nom email)
+
+* Gestion de compte :
+	-> juste log out (osef le reste)
+
+* Après avoir cliqué sur un groupe :
+	* sur la gauche même chose que le dashboard,
+	* au milieu
+		-> ajouter un bill :
+			-> description,
+			-> montant,
+			-> qui paye,
+			-> méthode de split : soit equal soit ajustement (à la main) avec +/-
+		-> supprimer un bill,
+		-> modifier un bill,
+		-> ajouter un paiement :
+			-> qui paye,
+			-> qui reçoit,
+			-> combien il reçoit
+		-> modifier un paiement,
+		-> supprimer un paiement
+
+	* sur la droite :
+		-> récapitulatif de la balance de chaque personne du groupe,
+
+* Après avoir cliqué sur un ami :
+	-> voir la relation avec cet amis : c-a-d si il nous doit ou si on lui doit de l'argent
+
+
+En résumé :
+- Le site est sympa mais il devient intéressant quand y'a bcp de personnes sur une très grosse facture,
+- Il est relativement propre
+- Il clair que on ne fera pas tout
+- Chez moi il fonctionne normal (il rame pas :p)
+- Mais très très chaud de faire tout ça dans le temps imparti, surtout avec une techno que on vient de découvrir..
+
+
+
+Remarques :
+- Je suis d'accord pour les ng-view !! et oui globalement on aura un layout en haut, un au milieu, un a gauche,
+un a droite et on switchera les views si nécessaire.
+
+- Je suis d'accord que yoeman télécharge bcp trop de chose mais on peut pas tout configurer quand il génère son archi.
+Bcp de trucs inutiles mais dans ce qu'il ajoute il y'a les modules/composant dont nous a parlé le prof au dernier cours,
+à savoir :
+	-> angular
+	-> angular-route
+	-> angular-ressource
+
+Il m'a téléchargé quelques trucs utiles je pense qu'il faudrait que je les commit sur le github (c'est pas très lourd)
