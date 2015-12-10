@@ -1,0 +1,23 @@
+{
+  "name": "mean-server",
+  "description": "",
+  "main": "app.js",
+  "authors": [
+    "antoinelaul <antoinelaul@outlook.fr>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/rjorel/mean-project",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.6"
+  }
+}
