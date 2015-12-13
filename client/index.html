@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="PayMeApp">
+<head>
+    <title>BePaidByHisFriends.com - The best website to get your money</title>
+
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="assets/css/signin.css" />
+
+    <script src="/bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-route/angular-route.min.js"></script>
+
+    <script src="app.js"></script>
+</head>
+<body role="document">
+
+<!-- Fixed navbar -->
+<nav class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/">BePaidByHisFriends.com</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <div class="navbar-form navbar-right">
+                <a href="#/register"><button class="btn btn-success">Sign up</button></a>
+                <a href="#/login"><button type="submit" class="btn btn-primary">Sign in</button></a>
+            </div>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+
+<div class="container theme-showcase" role="main" ng-controller="MainCtrl">
+
+    <div ng-view>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>
