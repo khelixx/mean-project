@@ -1,58 +1,76 @@
-'use strict';
 
 (function() {
+    'use strict';
 
     // Main module.
     var app = angular.module('PayMeApp', ['ngRoute', 'ngResource']);
 
     // Routes configurations.
-    app.config(['$routeProvider',
-        function($routeProvider) {
-            $routeProvider
-                .when('/', {
-                    templateUrl: "views/welcome.html"
-                })
+    app.config(['$routeProvider', function($routeProvider) {
+        $routeProvider
+            .when('/', {
+                templateUrl: "views/welcome.html"
+            })
 
-                .when('/login', {
-                    templateUrl: "views/login.html",
-                    controller: 'LoginCtrl'
-                })
+            .when('/login', {
+                templateUrl: "views/login.html",
+                controller: 'LoginCtrl'
+            })
 
-                .when('/register', {
-                    templateUrl: "views/register.html",
-                    controller: 'RegisterCtrl'
-                })
-        }
-    ]);
+            .when('/register', {
+                templateUrl: "views/register.html",
+                controller: 'RegisterCtrl'
+            })
 
-    app.factory('payMeFactory', ['$resource', function($res) {
-        return $res('/users', {}, {
-            get: {
-                method: 'GET',
-                isArray: true
+            .otherwise({ redirectTo: '/' });
+
+    }]);
+
+    // For communication.
+    app.factory('UserFactory', ['$resource', function($res) {
+        return $res('/user/:userId', { userId: '@_id' }, {
+            update: {
+                method: 'PUT'
             }
         });
     }]);
 
 
-    app.controller('MainCtrl', ['$scope', 'payMeFactory', function($scope, fact) {
-        $scope.users = fact.get();
+    // And now, the controllers.
+    app.controller('MainCtrl', ['$scope', function($scope) {
+
     }]);
 
-    app.controller('LoginCtrl', ['$scope', function($scope) {
-        $scope.credentials = {
-            email: "",
-            passwd: ""
-        };
+    app.controller('LoginCtrl', ['$scope', 'UserFactory', function($scope, Users) {
+        $scope.login = function() {
+          //  var user = new User({
+          //      email: $scope.email,
+          //      passwd: $scope.passwd
+          //  });
 
-        $scope.login = function(credentials) {
-            if (credentials.email == "rjorel@truc.fr" && credentials.passwd == "truc")
-                alert("You are logged !");
+            var user = Users.get({ email: $scope.email, passwd: $scope.passwd });
+         //   console.log(user);
         }
     }]);
 
-    app.controller('RegisterCtrl', ['$scope', function($scope) {
+    app.controller('RegisterCtrl', ['$scope', 'UserFactory', function($scope, Users) {
+        $scope.register = function() {
+            var user = new Users({
+                email: $scope.email,
+                passwd: $scope.passwd
+            });
 
+            user.$save(function(res) {
+                $scope.good = "";
+                $scope.bad = "";
+
+                if (res.    exists)
+                    $scope.bad = "This e-mail address already exists... try something else, bastard !"
+
+                else
+                    $scope.good = "You are registred, now get your money !"
+            });
+        }
     }]);
 
 })();

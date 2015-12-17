@@ -1,16 +1,16 @@
 
 <div class="container" ng-controller="LoginCtrl">
     <form class="form-signin"
-          ng-submit="login(credentials)" novalidate>
+          ng-submit="login()" novalidate>
 
         <h2 class="form-signin-heading">Log you, guy !</h2>
 
         <label class="sr-only">Email address</label>
-        <input type="email" ng-model="credentials.email"
+        <input type="email" ng-model="email"
                class="form-control" placeholder="Email address" required autofocus>
 
         <label class="sr-only">Password</label>
-        <input type="password" ng-model="credentials.passwd"
+        <input type="password" ng-model="passwd"
                class="form-control" placeholder="Password" required>
 
         <br />
