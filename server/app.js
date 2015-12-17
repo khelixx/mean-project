@@ -19,8 +19,8 @@ app.use('/bower_components', express.static("bower_components"));
 app.get('/users', function(req, res, next) {
     res.send([
         {id: 1, name: "Jorel", fname: "Raphael", desc: "Nothing"},
-        {id: 2, name: "Laulan", fname: "Antoine", desc: "Euh..."},
-        {id: 3, name: "Verdugo", fname: "Guillaume", desc: "Maybe gay"}]);
+        {id: 2, name: "Laulan", fname: "Antoine", desc: "Master"},
+        {id: 3, name: "Verdugo", fname: "Guillaume", desc: "Maybe gay!!"}]);
 });
 
 
