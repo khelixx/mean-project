@@ -3,7 +3,7 @@
 (function() {
 
     // Main module.
-    var app = angular.module('PayMeApp', ['ngRoute']);
+    var app = angular.module('PayMeApp', ['ngRoute', 'ngResource']);
 
     // Routes configurations.
     app.config(['$routeProvider',
@@ -25,10 +25,18 @@
         }
     ]);
 
+    app.factory('payMeFactory', ['$resource', function($res) {
+        return $res('/users', {}, {
+            get: {
+                method: 'GET',
+                isArray: true
+            }
+        });
+    }]);
 
 
-    app.controller('MainCtrl', ['$scope', function($scope) {
-
+    app.controller('MainCtrl', ['$scope', 'payMeFactory', function($scope, fact) {
+        $scope.users = fact.get();
     }]);
 
     app.controller('LoginCtrl', ['$scope', function($scope) {

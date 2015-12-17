@@ -10,4 +10,17 @@
         <br />
         <button class="btn btn-lg btn-success btn-block" type="submit">Sign up</button>
     </form>
+
+    See, there are a lots of developers already in the game:
+    <div ng-repeat="user in users">
+        <ul>
+            <li>
+                <span ng-bind="user.name"></span>
+                <span ng-bind="user.fname"></span> -->
+                <span ng-bind="user.desc"></span>
+            </li>
+        </ul>
+    </div>
 </div>
+
+
