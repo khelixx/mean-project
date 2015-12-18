@@ -31,11 +31,9 @@ MongoClient.connect(url, function(err, db) {
             return;
         }
 
-        app.get('/user', function(req, res) {
-            console.log(req.body);
-            console.log(req.params);
-
-            coll.findOne({ email: req.body.email, passwd: req.body.email },
+        app.get('/user/:email/:passwd', function(req, res) {
+            coll.findOne(
+                { email: req.params.email, passwd: req.params.passwd },
                 function(err, user) {
                     if (err) {
                         console.log("Impossible to access data");
@@ -57,7 +55,7 @@ MongoClient.connect(url, function(err, db) {
                     res.send({exists: true})
 
                 else {
-                    coll.insert({
+                        coll.insert({
                         email: req.body.email,
                         passwd: req.body.passwd
                     });

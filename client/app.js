@@ -3,7 +3,7 @@
     'use strict';
 
     // Main module.
-    var app = angular.module('PayMeApp', ['ngRoute', 'ngResource']);
+    var app = angular.module('payMeApp', ['ngRoute', 'ngResource']);
 
     // Routes configurations.
     app.config(['$routeProvider', function($routeProvider) {
@@ -28,7 +28,7 @@
 
     // For communication.
     app.factory('UserFactory', ['$resource', function($res) {
-        return $res('/user/:userId', { userId: '@_id' }, {
+        return $res('/user/:email/:passwd', { }, {
             update: {
                 method: 'PUT'
             }
@@ -38,24 +38,22 @@
 
     // And now, the controllers.
     app.controller('MainCtrl', ['$scope', function($scope) {
-
+        $scope.email = "";
+        $scope.passwd = "";
     }]);
 
-    app.controller('LoginCtrl', ['$scope', 'UserFactory', function($scope, Users) {
+    app.controller('LoginCtrl', function($scope, $rootScope, UserFactory) {
         $scope.login = function() {
-          //  var user = new User({
-          //      email: $scope.email,
-          //      passwd: $scope.passwd
-          //  });
+            UserFactory.get({ email: $scope.email, passwd: $scope.passwd }, function(user) {
 
-            var user = Users.get({ email: $scope.email, passwd: $scope.passwd });
-         //   console.log(user);
+                $rootScope.user = user;
+            });
         }
-    }]);
+    });
 
-    app.controller('RegisterCtrl', ['$scope', 'UserFactory', function($scope, Users) {
+    app.controller('RegisterCtrl', function($scope, UserFactory) {
         $scope.register = function() {
-            var user = new Users({
+            var user = new UserFactory({
                 email: $scope.email,
                 passwd: $scope.passwd
             });
@@ -64,13 +62,13 @@
                 $scope.good = "";
                 $scope.bad = "";
 
-                if (res.    exists)
-                    $scope.bad = "This e-mail address already exists... try something else, bastard !"
+                if (res.exists)
+                    $scope.bad = "This e-mail address is already used... try something else, bastard !"
 
                 else
                     $scope.good = "You are registred, now get your money !"
             });
         }
-    }]);
+    });
 
 })();
