@@ -1,72 +1,18 @@
-var express = require("express");
-var fs = require("fs");
-var bodyParser = require("body-parser");
+var express = require('express'),
+    fs = require('fs'),
+    bodyParser = require('body-parser'),
+    mongoose = require('mongoose');
 
-var MongoClient = require("mongodb").MongoClient;
-var url = "mongodb://localhost:27017/test";
+var url = "mongodb://localhost/test";
 
-// var routes = require("./routes/index");
-// var users = require("./routes/users");
+
 var app = express();
-
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// app.use('/', routes);
-// app.use('/users', users);
-
-app.use(express.static("client"));
-app.use('/bower_components', express.static("bower_components"));
-
-MongoClient.connect(url, function(err, db) {
-    if (err) {
-        console.log("Impossible to connect database");
-        return;
-    }
-
-    db.collection("users", function(err, coll) {
-        if (err) {
-            console.log("Impossible to connect collection");
-            return;
-        }
-
-        app.get('/user/:email/:passwd', function(req, res) {
-            coll.findOne(
-                { email: req.params.email, passwd: req.params.passwd },
-                function(err, user) {
-                    if (err) {
-                        console.log("Impossible to access data");
-                        return;
-                    }
-
-                    res.send(user);
-                });
-        });
-
-        app.post('/user', function(req, res) {
-            coll.findOne({ email: req.body.email }, function(err, user) {
-                if (err) {
-                    console.log("Impossible to access data");
-                    return;
-                }
-
-                if (user)
-                    res.send({exists: true})
-
-                else {
-                        coll.insert({
-                        email: req.body.email,
-                        passwd: req.body.passwd
-                    });
-
-                    res.send({exists: false})
-                }
-            })
-        });
-    });
-
-});
+app.use(express.static(__dirname + "/../client"));
+app.use('/bower_components', express.static(__dirname + "/../bower_components"));
 
 
 // Server start.
@@ -75,4 +21,47 @@ var server = app.listen(3000, function() {
     var port = server.address().port;
 
     console.log("Well connected to %s, at port %s", host, port);
+});
+
+
+// Database connection.
+var db = mongoose.connect(url);
+
+// Schemas (entities).
+var Schema = mongoose.Schema;
+
+// User definition (just a email and a password for the moment).
+var UserSchema = new Schema({
+    email: String,
+    passwd: String
+});
+
+// Models
+UserModel = mongoose.model('UserModel', UserSchema);
+
+
+app.get('/user/:email/:passwd', function(req, res) {
+    UserModel.findOne(req.params, function(err, user, next) {
+        if (err) return next(err);
+
+        res.send(user);
+    })
+});
+
+app.post('/user', function(req, res) {
+    UserModel.findOne({ email: req.body.email }, function(err, data, next) {
+        if (err) return next(err);
+
+        if (data)           // No more than one user by address.
+            res.send({});
+
+        else {
+            var user = UserModel(req.body);
+            user.save(function (err, results) {
+                if (err) return next(err);
+
+                res.send(results);
+            });
+        }
+    })
 });

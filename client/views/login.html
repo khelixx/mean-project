@@ -1,5 +1,9 @@
 
+<div ng-include="'views/inc/menu.html'"></div>
+
 <div class="container" ng-controller="LoginCtrl">
+    <span class="red" ng-bind="alert"></span>
+
     <form class="form-signin"
           ng-submit="login()" novalidate>
 

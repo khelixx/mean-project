@@ -22,6 +22,26 @@
                 controller: 'RegisterCtrl'
             })
 
+            .when('/logout', {
+                templateUrl: "views/logout.html",
+                controller: 'LogoutCtrl'
+            })
+
+            .when('/user', {
+                templateUrl: "views/user.html",
+                controller: 'UserCtrl'
+            })
+
+            .when('/user/settings', {
+                templateUrl: "views/user_settings.html",
+                controller: 'UserSettingsCtrl'
+            })
+
+            .when('/user/add_group', {
+                templateUrl: "views/user_add_group.html",
+                controller: 'UserAddGroupCtrl'
+            })
+
             .otherwise({ redirectTo: '/' });
 
     }]);
@@ -38,20 +58,25 @@
 
     // And now, the controllers.
     app.controller('MainCtrl', ['$scope', function($scope) {
-        $scope.email = "";
-        $scope.passwd = "";
+
     }]);
 
-    app.controller('LoginCtrl', function($scope, $rootScope, UserFactory) {
+    app.controller('LoginCtrl', function($scope, $rootScope, $location, UserFactory) {
         $scope.login = function() {
             UserFactory.get({ email: $scope.email, passwd: $scope.passwd }, function(user) {
+                $scope.alert = "";
 
-                $rootScope.user = user;
+                if (user.email) {
+                    $rootScope.user = user;
+                    $location.url("/user");
+                }
+                else
+                    $scope.alert = "Are you killing me ? Go register you before trying the website..."
             });
         }
     });
 
-    app.controller('RegisterCtrl', function($scope, UserFactory) {
+    app.controller('RegisterCtrl', function($scope, $location, $rootScope, UserFactory) {
         $scope.register = function() {
             var user = new UserFactory({
                 email: $scope.email,
@@ -59,16 +84,33 @@
             });
 
             user.$save(function(res) {
-                $scope.good = "";
-                $scope.bad = "";
+                $scope.alert = "";
 
-                if (res.exists)
-                    $scope.bad = "This e-mail address is already used... try something else, bastard !"
-
+                if (res.email) {
+                    $rootScope.user = res;
+                    $location.url("/user");
+                }
                 else
-                    $scope.good = "You are registred, now get your money !"
+                    $scope.alert = "Another person uses this address ! You are not the lonely one who wants his money...";
+
             });
         }
+    });
+
+    app.controller('LogoutCtrl', function($scope, $rootScope) {
+        $scope.truc = "truc";
+    });
+
+    app.controller('UserCtrl', function($scope) {
+
+    });
+
+    app.controller('UserSettingsCtrl', function($scope) {
+
+    });
+
+    app.controller('UserAddGroupCtrl', function($scope) {
+
     });
 
 })();

@@ -1,7 +1,9 @@
 
+<div ng-include="'views/inc/menu.html'"></div>
+
+
 <div class="container" ng-controller="RegisterCtrl">
-    <span class="green" ng-bind="good"></span>
-    <span class="red" ng-bind="bad"></span>
+    <span class="red" ng-bind="alert"></span>
 
     <form class="form-signin"
           ng-submit="register()" novalidate>
