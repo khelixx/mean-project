@@ -47,13 +47,15 @@
     }]);
 
     // For communication.
+    // E-mail address is used as id.
     app.factory('UserFactory', ['$resource', function($res) {
-        return $res('/user/:email/:passwd', { }, {
+        return $res('/user/:email/:passwd', {  }, {
             update: {
                 method: 'PUT'
             }
         });
     }]);
+
 
 
     // And now, the controllers.
@@ -66,6 +68,7 @@
             UserFactory.get({ email: $scope.email, passwd: $scope.passwd }, function(user) {
                 $scope.alert = "";
 
+                // Email -> id.
                 if (user.email) {
                     $rootScope.user = user;
                     $location.url("/user");
@@ -86,6 +89,8 @@
             user.$save(function(res) {
                 $scope.alert = "";
 
+                // If the result is defined, save worked. Otherwise, e-mail address is already used.
+                // (See node server).
                 if (res.email) {
                     $rootScope.user = res;
                     $location.url("/user");
@@ -98,7 +103,7 @@
     });
 
     app.controller('LogoutCtrl', function($scope, $rootScope) {
-        $scope.truc = "truc";
+
     });
 
     app.controller('UserCtrl', function($scope) {
@@ -109,7 +114,33 @@
 
     });
 
-    app.controller('UserAddGroupCtrl', function($scope) {
+    app.controller('UserAddGroupCtrl', function($scope, $rootScope, $location, UserFactory) {
+        $scope.group_name = "";
+        $scope.group_person_names = [];
+
+        $scope.add_group = function() {
+            if ($scope.group_name == "") {          // Group name is required. It's possible to have group with no persons.
+                $scope.alert = "No group name";
+                return;
+            }
+
+            // Get user in database to update it. Strangely, even the user comes from database, it's
+            // not possible to update it directly (or I didn't do the good method).
+            UserFactory.get({ email: $rootScope.user.email, passwd: $rootScope.user.passwd },
+                function(user) {
+                    if (user.email) {
+                        user.groups.push({
+                            name: $scope.group_name,
+                            persons: $scope.group_person_names
+                        });
+
+                        user.$update();
+                        $rootScope.user = user;     // Update user data.
+
+                        $location.url("/user");
+                    }
+                });
+        }
 
     });
 

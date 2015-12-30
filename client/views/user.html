@@ -1,6 +1,24 @@
 
 <div ng-include="'views/inc/user_menu.html'"></div>
 
-<div class="container col-md-12" ng-controller="UserCtrl">
+
+<div class="container col-md-4">
+    <h4>Groups</h4>
+    <div ng-repeat="group in user.groups">
+        <span ng-bind="group.name"></span>
+    </div>
+
+    <a href="#/user/add_group">+</a>
+
+    <h4>Persons</h4>
+
+    <div ng-repeat="group in user.groups">
+        <div ng-repeat="person in group.persons">
+            <span ng-bind="person"></span>
+        </div>
+    </div>
+</div>
+
+<div class="container col-md-8" ng-controller="UserCtrl">
     Welcome <span ng-bind="user.email"></span>
 </div>
