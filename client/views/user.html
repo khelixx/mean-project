@@ -4,14 +4,13 @@
 
 <div class="container col-md-4">
     <h4>Groups</h4>
-    <div ng-repeat="group in user.groups">
-        <span ng-bind="group.name" ng-click="change_group(group)"></span>
+    <div ng-repeat="group in user.groups track by $index">
+        <a><span ng-bind="group.name" ng-click="change_group(group)"></span></a>
     </div>
 
-    <a href="#/user/add_group">+</a>
+    <a href="#/user/add_group"><button>+</button></a>
 
     <h4>Persons</h4>
-
     <div ng-repeat="group in user.groups track by $index">
         <div ng-repeat="person in group.persons track by $index">
             <span ng-bind="person"></span>
@@ -20,5 +19,7 @@
 </div>
 
 <div class="container col-md-8" ng-controller="UserCtrl">
-
+    <div ng-repeat="person in selected_group.persons">
+        <span ng-bind="person"></span>
+    </div>
 </div>

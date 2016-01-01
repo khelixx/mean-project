@@ -107,11 +107,10 @@
     });
 
     app.controller('UserCtrl', function($scope) {
-        $scope.persons = [];
         $scope.selected_group = {};
 
         $scope.change_group = function(group) {
-            $scope.selected_group = group;
+            $scope.selected_group.group = group;
             console.log(group);
         }
     });
