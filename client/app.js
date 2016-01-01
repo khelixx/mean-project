@@ -107,7 +107,13 @@
     });
 
     app.controller('UserCtrl', function($scope) {
+        $scope.persons = [];
+        $scope.selected_group = {};
 
+        $scope.change_group = function(group) {
+            $scope.selected_group = group;
+            console.log(group);
+        }
     });
 
     app.controller('UserSettingsCtrl', function($scope) {
