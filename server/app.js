@@ -33,7 +33,9 @@ var Schema = mongoose.Schema;
 // User definition (just a email and a password for the moment).
 var UserSchema = new Schema({
     email: String,
-    passwd: String
+    passwd: String,
+    groups: Array,
+    settings: Array
 });
 
 // Models
@@ -64,4 +66,11 @@ app.post('/user', function(req, res) {
             });
         }
     })
+});
+
+app.put('/user', function(req, res) {
+    UserModel.findOne({ email: req.body.email }, function (err, user){
+        user.groups = req.body.groups;
+        user.save();
+    });
 });
