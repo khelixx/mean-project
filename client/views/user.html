@@ -1,25 +1,76 @@
+<div id="transparency">
+    <div ng-include="'views/inc/user_menu.html'"></div>
+    <div ng-class="'assets/css/style.css'"></div>
 
-<div ng-include="'views/inc/user_menu.html'"></div>
+    <div class="container col-md-3">
+        <h4>Groups</h4>
+        <div ng-repeat="group in user.groups track by $index">
+            <a href ng-click="show_group(group)"><span ng-bind="group.name" ></span></a>
+        </div>
 
+        <a href="#/user/add_group"><button>+</button></a>
 
-<div class="container col-md-4">
-    <h4>Groups</h4>
-    <div ng-repeat="group in user.groups track by $index">
-        <a><span ng-bind="group.name" ng-click="change_group(group)"></span></a>
-    </div>
+        <h4>Persons</h4>
+        <div ng-repeat="group in user.groups track by $index">
+            <div ng-repeat="person in group.persons track by $index">
+                <span ng-bind="person"></span>
+            </div>
+        </div>
 
-    <a href="#/user/add_group"><button>+</button></a>
-
-    <h4>Persons</h4>
-    <div ng-repeat="group in user.groups track by $index">
-        <div ng-repeat="person in group.persons track by $index">
-            <span ng-bind="person"></span>
+        <h4> Flat </h4>
+        <div ng-repeat="group in user.groups track by $index">
+            <span ng-bind="group.flat"></span>
         </div>
     </div>
+
+
+    <div id="bill_global" class="container col-md-3">
+        <a href ng-show="current_groupe" ng-click="add_bill()"><button>+</button></a>
+        <div id="bill_title">
+            <h3 ng-show="current_groupe.name"> {{current_groupe.name}}</h3>
+            <h3 ng-hide="current_groupe.name" > Dashboard </h3>
+        </div>
+
+        <div id="bill_list">
+            <h3 ng-show="current_groupe.bill"> coucou </h3>
+            <h3 ng-hide="current_groupe.bill"> Il n'y a pas d'annonce</h3>
+        </div>
+    </div>
+
+    <div class="container col-md-4" ng-controller="UserCtrl">
+        <div ng-repeat="member in current_groupe.persons track by $index">
+            <span> {{member}}</span>
+        </div>
+    </div>
+
 </div>
 
-<div class="container col-md-8" ng-controller="UserCtrl">
-    <div ng-repeat="person in selected_group.persons">
-        <span ng-bind="person"></span>
+<!-- interfaces for bill --> 
+<div ng-show="bill_show" id="bill">
+    <div>
+        <a href ng-click="close_bill()"><button>close</button></a>
+        <p> With you and all of  {{current_groupe.name}}</p>
+        <input placeholder="enter a description"> </input>
+        <input ng-model="price" placeholder="0.00 $"> </input></br>
+        <span> Paid by <a href ng-click="bill_payer()"> {{payer}} </a> and split <a href ng-click="number_of_payers()"> equally </a> </span></br>
+        <span> ($ <span ng-bind="price / number_payers"/> /person) </span>
     </div>
-</div>
+
+    <div class="check-element animate-show" ng-show="check_payer" id="bill_payers">
+        <div id="payers" ng-repeat="member in current_groupe.persons track by $index">
+            <span> <a href ng-click="change_payer(member)"> {{member}} </a></span>
+        </div>
+        <span> <a href ng-click="change_payer()"> you </a></span>
+    </div>
+
+     <div class="check-element animate-show" ng-show="check_count_payer">  
+        <span> counter </span> </br>
+        <div id="payers" ng-repeat="member in current_groupe.persons track by $index"> 
+            <input type="checkbox" ng-change="checkbox_update($index)" ng-model="checkbox_group[$index].value"/> {{member}}
+        </div>
+        <input type="checkbox" ng-change="checkbox_update(((checkbox_group.length)-1))" ng-model="checkbox_group[((checkbox_group.length)-1)].value"/> you
+     </div>
+
+</div> 
+
+

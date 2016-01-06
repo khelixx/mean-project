@@ -1,8 +1,69 @@
-
+body {
+     height:100%;
+     margin:0;
+     padding:0;
+}
 .green {
     color: #2dd82d;
 }
 
 .red {
     color: #d90d0a;
+}
+
+
+/************************************************************************ Add_appart **********************************************************************************/
+
+#form_appart{
+	width:350px;
+	margin:auto;
+}
+
+td{
+	padding:5px;
+}
+
+/************************************************************************ user **********************************************************************************/
+
+#bill_global{
+	width:35%;
+	min-height: 500px;
+
+}
+
+#bill_title{
+	background-color: lightgrey;
+	height:10%;
+	position: absolute;
+	width:100%;
+}
+
+#bill_list{
+	margin-top: 50px;
+	height: 90%;
+	width:100%;
+}
+
+#bill{
+     position: absolute;
+     left: 0px;
+     top: 0px;
+     width:100%;
+     height:100%;
+     text-align:center;
+     z-index: 1000;
+}
+
+#bill div {
+     width:300px;
+     margin: 100px auto;
+     background-color: #fff;
+     border:1px solid #000;
+     padding:15px;
+     text-align:center;
+     float:left;
+}
+
+#bill_payers{
+    float:right;
 }
