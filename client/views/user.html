@@ -24,20 +24,44 @@
     </div>
 
 
-    <div id="bill_global" class="container col-md-3">
-        <a href ng-show="current_groupe" ng-click="add_bill()"><button>+</button></a>
+    <div id="bill_global" class="container col-md-5">
+        <a href ng-show="current_groupe" ng-click="add_bill()"><button> Add a bill</button></a>
         <div id="bill_title">
             <h3 ng-show="current_groupe.name"> {{current_groupe.name}}</h3>
             <h3 ng-hide="current_groupe.name" > Dashboard </h3>
         </div>
 
         <div id="bill_list">
-            <h3 ng-show="current_groupe.bill"> coucou </h3>
-            <h3 ng-hide="current_groupe.bill"> Il n'y a pas d'annonce</h3>
+            <div ng-hide="current_groupe.bill">
+                <div>
+                    <table>
+                        <tr>
+                            <td>
+                                total balance </br>
+                            </td>
+
+                            <td>
+                                you owe
+                            </td>
+
+                            <td>
+                                you are owed
+                            </td>
+                        </tr>
+
+                    </table>
+                    
+                </div>
+            </div>
+
+
+            <div ng-show="current_groupe.bill">
+                <h3 > Il n'y a pas d'annonce</h3>
+            </div>
         </div>
     </div>
 
-    <div class="container col-md-4" ng-controller="UserCtrl">
+    <div class="container col-md-2" ng-controller="UserCtrl">
         <div ng-repeat="member in current_groupe.persons track by $index">
             <span> {{member}}</span>
         </div>
@@ -50,10 +74,11 @@
     <div>
         <a href ng-click="close_bill()"><button>close</button></a>
         <p> With you and all of  {{current_groupe.name}}</p>
-        <input placeholder="enter a description"> </input>
+        <input ng-model= "description_bill" placeholder="enter a description"> </input>
         <input ng-model="price" placeholder="0.00 $"> </input></br>
         <span> Paid by <a href ng-click="bill_payer()"> {{payer}} </a> and split <a href ng-click="number_of_payers()"> equally </a> </span></br>
         <span> ($ <span ng-bind="price / number_payers"/> /person) </span>
+        <button href ng-click="save()"> save </button>
     </div>
 
     <div class="check-element animate-show" ng-show="check_payer" id="bill_payers">
