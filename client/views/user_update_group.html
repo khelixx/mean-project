@@ -1,0 +1,18 @@
+
+<div ng-include="'views/inc/user_menu.html'"></div>
+
+<div class="container col-md-8" ng-controller="UserUpdate">
+     <div>
+     		<h3> Display and/or update {{ value.name }} </h3>
+     </div> 
+     <div>
+	     <form ng-submit="update_group()">
+		     <div ng-repeat="names in value.persons track by $index">
+		             <input type="text"  ng-model="value.persons[$index]" class="form-control"
+                         placeholder="{{names}}">
+             </div>
+
+		     <button class="btn btn-lg btn-success btn-block" type="submit">Add</button>
+	    <form>
+    </div>
+</div>
