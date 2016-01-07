@@ -67,3 +67,13 @@ td{
 #bill_payers{
     float:right;
 }
+
+.dashboard_list{
+    float:left;
+    width:45%;
+    margin-right: 10px;
+}
+
+.dashboard_owe{
+    border:1px solid black;
+}
