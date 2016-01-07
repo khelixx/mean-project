@@ -27,16 +27,15 @@
     <div id="bill_global" class="container col-md-4">
         <a href ng-show="current_groupe" ng-click="add_bill()"><button> Add a bill</button></a>
         <div id="bill_title">
-            <h3 ng-show="current_groupe.name"> {{current_groupe.name}}</h3>
-            <h3 ng-hide="current_groupe.name" > Dashboard </h3>
+            <h3 ng-show="title_dashboard('group')"> {{current_groupe.name}}</h3>
+            <h3 ng-show="title_dashboard('dashboard')" > Dashboard </h3>
+            <h3 ng-show="title_dashboard('friend')"> {{friend_name}}  </h3>
         </div>
 
         <div id="bill_list">
 
            <div ng-show="check_bill('dashboard')">
-                <div>
-                    <div> Dashboard
-                    </div>
+                <div></br>
                     <table>
                         <tr>
                             <td>
@@ -62,6 +61,7 @@
                         <div class = "dashboard_list">
                             you owe
                            <div class="dashboard_owe" ng-repeat="persons_owed in review.total_owed track by $index">
+                                <span> {{}}</span>
                                to <span ng-bind="persons_owed.person" /> </br>
                                 <span ng-bind="persons_owed.money" /> $</span></br>
                             </div>
