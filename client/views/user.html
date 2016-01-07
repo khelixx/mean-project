@@ -13,14 +13,14 @@
         <h4>Persons</h4>
         <div ng-repeat="group in user.groups track by $index">
             <div ng-repeat="person in group.persons track by $index">
-                <span ng-bind="person"></span>
+                <a href ng-click="show_listbill_friend(person)"> <span ng-bind="person"></span> </a>
             </div>
         </div>
 
         <h4> Flat </h4>
-        <div ng-repeat="group in user.groups track by $index">
-            <span ng-bind="group.flat"></span>
-        </div>
+            <div ng-repeat="group in user.groups track by $index">
+                <span ng-bind="group.flat"></span>
+            </div>
     </div>
 
 
@@ -33,7 +33,7 @@
 
         <div id="bill_list">
 
-            <div ng-show="check_bill()">
+           <div ng-show="check_bill('dashboard')">
                 <div>
                     <div> Dashboard
                     </div>
@@ -59,42 +59,45 @@
 
 
                     <div>
-                    <div class = "dashboard_list">
-                        you owe
-                       <div class="dashboard_owe" ng-repeat="persons_owed in review.total_owed track by $index">
-                           to <span ng-bind="persons_owed.person" /> </br>
-                            <span ng-bind="persons_owed.money" /> $</span></br>
-                        </div>
-                    </div>  
+                        <div class = "dashboard_list">
+                            you owe
+                           <div class="dashboard_owe" ng-repeat="persons_owed in review.total_owed track by $index">
+                               to <span ng-bind="persons_owed.person" /> </br>
+                                <span ng-bind="persons_owed.money" /> $</span></br>
+                            </div>
+                        </div>  
 
 
-                    <div class = "dashboard_list">
-                        you are owed
-                       <div class="dashboard_owe" ng-repeat="persons_owe in review.total_owe track by $index">
-                         by   <span ng-bind="persons_owe.person" /> </br>
-                            <span ng-bind="persons_owe.money" /> $ </span></br>
-                        </div>
-                    </div>  
-
-                </div>
-
-
-
-
-
-
-
-
+                        <div class = "dashboard_list">
+                            you are owed
+                           <div class="dashboard_owe" ng-repeat="persons_owe in review.total_owe track by $index">
+                             by   <span ng-bind="persons_owe.person" /> </br>
+                                <span ng-bind="persons_owe.money" /> $ </span></br>
+                            </div>
+                        </div>  
+                     </div>
                 </div>
             </div> 
 
-
-
-            <div ng-hide="check_bill()">
+           <div ng-show="check_bill('none')">
                 <h3 > Il n'y a pas d'annonce</h3>
             </div>
+            
+            <div ng-show="check_bill('friend')">
+                 <div ng-repeat="bill in list_friend track by $index">
+                    <div ng-show = "check_user_in_array(bill.money)">
+                        <div ng-show = "check_money(bill.money)">
+                            <p> groupe : <span ng-bind="bill.group_bill"></span> </p>
+                            you owed <span ng-bind="bill.money"></span>
+                        </div>
 
-
+                         <div ng-hide = "check_money(bill.money)">
+                            <p> groupe : <span ng-bind="bill.group_bill"></span> </p>
+                             You owe <span ng-bind="bill.money"> </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
