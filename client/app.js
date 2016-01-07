@@ -116,7 +116,7 @@
 
     });
 
-    app.controller('UserCtrl', function($scope, $location,$rootScope, UserFactory) {
+    app.controller('UserCtrl', function($scope, $location,$rootScope, UserFactory, $filter) {
 
         //scope variables for bill etc...
         $scope.payer = "you";
@@ -124,6 +124,7 @@
         $scope.check_count_payer = false;
         $scope.number_payers = 0;
         $scope.opacity = 1;
+
 
         //variable for init facture number of payers
         var count_payers_init = false;
@@ -138,6 +139,18 @@
             $scope.current_groupe = group;
         }
 
+        $scope.check_bill = function(){
+            var bool = false;
+            $rootScope.user.groups.forEach(function(element, index, array){
+                if(element.bill.length != 0){
+                    bool = true;
+                }
+            });
+
+            return bool;
+        }
+
+        //display bill interface
         $scope.add_bill = function(){
             $scope.bill_show = true;
             $scope.number_payers = $scope.current_groupe.persons.length + 1;
@@ -160,6 +173,7 @@
             }
         };
 
+        //close bill interface
         $scope.close_bill = function(){
             $scope.check_payer = false;
             $scope.check_count_payer = false;
@@ -170,6 +184,7 @@
             angular.element("#transparency")[0].style.opacity = 1;
         }
 
+        //display payer interface
         $scope.bill_payer = function(){
             if ($scope.check_payer){
                 $scope.check_payer = false;
@@ -185,6 +200,7 @@
             (member? $scope.payer = member : $scope.payer = "you");
         }
 
+        //display number of payers interface
         $scope.number_of_payers = function(){
 
             if ($scope.check_count_payer){
@@ -196,17 +212,20 @@
             } 
         }
 
+        //update the number of payers
         $scope.checkbox_update = function(index){
 
             ($scope.checkbox_group[index].value? $scope.number_payers ++ :  $scope.number_payers --);
         }
 
 
+        //Add the bill in user
         $scope.save = function (){
 
             var add_bill_bdd = $rootScope.user.groups;
             var owed_array = [];
 
+            //fill the array of owed persons
             $scope.checkbox_group.forEach(function(element, index, array){
                 if (element.value == true){
                     var owed_person = {
@@ -217,12 +236,10 @@
                 }
             });
 
-            console.log(owed_array);
-
-            // creation of a temporary index object because we cant push on the array direct
+            // creation of a temporary index object because we cant push on the array direct and replace
             add_bill_bdd.forEach(function(element, index, array){
-                if ( add_bill_bdd[index].name == $scope.current_groupe.name){
-                    
+                if ( element.name == $scope.current_groupe.name){
+
                     var bill_current = {
                         owe : $scope.payer,
                         owed : owed_array,
@@ -230,22 +247,21 @@
                     }
 
                     var tmp_group = {
-                        name : add_bill_bdd[index].name,
-                        persons : add_bill_bdd[index].persons,
-                        bill : add_bill_bdd[index].bill 
+                        name : element.name,
+                        persons : element.persons,
+                        bill : element.bill 
                     }
 
                     tmp_group.bill.push(bill_current);
-                    add_bill_bdd[index] = tmp_group;
-                    console.log( add_bill_bdd[index]);               
+                    element = tmp_group;              
                 }
             });
-            
+
             //update user groups
             UserFactory.get({ email: $rootScope.user.email, passwd: $rootScope.user.passwd },
                 function(user) {
                     if (user.email) {
-                        user.groups = add_bill_bdd
+                        user.groups = add_bill_bdd;
                         user.$update();
                         $rootScope.user = user;     // Update user data.
                     }
@@ -255,7 +271,44 @@
             $scope.close_bill();
         }
 
-    });
+
+        //retrieve money
+        $scope.total_balance = function(){
+
+            var balance_user = {
+                owed : 0,
+                owe : 0,
+                total : 0,
+                total_owed : [],
+                total_owe : []
+            }
+
+            $rootScope.user.groups.forEach(function(group,index){
+                group.bill.forEach(function(bill,index_bill){
+                    bill.owed.forEach(function(owed_person,index_person){
+                        if(owed_person.person == "you" && bill.owe != "you"){
+                            balance_user.owe += owed_person.money;
+                            balance_user.total_owe.push({person : bill.owe , money : owed_person.money});
+                        }
+
+                        if (owed_person.person != "you" && bill.owe == "you"){
+                            balance_user.owed +=  owed_person.money;
+                             balance_user.total_owed.push(owed_person);
+                        }
+                     });
+                 });  
+             });
+
+             balance_user.total = balance_user.owed - balance_user.owe;
+             console.log(balance_user);
+             return balance_user;
+        }
+
+           $scope.review = $scope.total_balance();
+
+});
+
+
 
 app.controller('UserSettingsCtrl', function($scope) {
 
