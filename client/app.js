@@ -124,30 +124,49 @@
         $scope.check_count_payer = false;
         $scope.number_payers = 0;
         $scope.opacity = 1;
-
+        $scope.check_bill = [ {dashboard : false , friend : false , none : true}];
 
         //variable for init facture number of payers
         var count_payers_init = false;
-
+        var display_title = "dashboard";
 
         $scope.change_group = function(group) {
             var group_json = angular.toJson(group);
             $location.url("/user/update_group?array=" + group_json);
         }
 
-        $scope.show_group = function(group) {
-            $scope.current_groupe = group;
+         function init_dashboard(){
+            $rootScope.user.groups.forEach(function(element, index, array){
+                    if(element.bill.length != 0){
+                         $scope.check_bill.dashboard = true;$scope.check_bill.friend = false;$scope.check_bill.none = false;
+                    }
+            });
         }
 
-        $scope.check_bill = function(){
-            var bool = false;
-            $rootScope.user.groups.forEach(function(element, index, array){
-                if(element.bill.length != 0){
-                    bool = true;
-                }
-            });
+        $scope.show_group = function(group) {
+            $scope.current_groupe = group;
+            init_dashboard();
+            display_title = "group";
+        }
 
-            return bool;
+        var bool_check_bill = false;
+        $scope.check_bill = function(param){
+            if(!bool_check_bill){
+                init_dashboard();
+                bool_check_bill = true;
+            }
+            
+            if(param == 'dashboard'){
+                 return $scope.check_bill.dashboard;
+            }
+
+            if (param == 'friend'){
+                return $scope.check_bill.friend;
+            }
+
+            if (param == 'none'){
+                return $scope.check_bill.none;
+            }
         }
 
         //display bill interface
@@ -194,7 +213,6 @@
                 $scope.check_count_payer = false;
             }
         }
-
 
         $scope.change_payer = function(member){
             (member? $scope.payer = member : $scope.payer = "you");
@@ -305,6 +323,53 @@
         }
 
            $scope.review = $scope.total_balance();
+           $scope.list_friend = null;
+
+
+        $scope.show_listbill_friend = function(friend){
+              $scope.check_bill.dashboard = false;$scope.check_bill.friend = true;$scope.check_bill.none = false;
+              $scope.current_groupe = null; display_title = "friend";
+              $scope.friend_name = friend;
+
+            var friend_resume = [];
+           
+             $rootScope.user.groups.forEach(function(group,index){
+                var count = 0;
+                group.bill.forEach(function(bill,index_bill){
+                    bill.owed.forEach(function(owed_person,index_person){
+                        if(owed_person.person == "you" && bill.owe == friend){
+                            count-= owed_person.money;
+                        }
+
+                        if (owed_person.person == friend && bill.owe == "you"){
+                            count += owed_person.money;
+                        }
+                     });
+                 }); 
+
+                 friend_resume.push({money : count , group_bill : group.name}); 
+             });
+
+            $scope.list_friend =  friend_resume;
+        }
+
+        $scope.check_money = function(money){
+          return money >0;
+        }
+
+        $scope.check_user_in_array = function(money){
+            return (money >0 || money < 0);
+        }
+
+        $scope.title_dashboard = function(name){
+            var temp = false;
+
+            (name == display_title ? temp = true : temp);
+            (name == display_title ? temp = true : temp);
+            (name == display_title ? temp = true : temp);
+
+            return temp;
+        }
 
 });
 
