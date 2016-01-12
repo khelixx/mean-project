@@ -6,16 +6,19 @@
     <form ng-submit="add_group()" novalidate>
         <h3>Group</h3>
         <label class="sr-only">Name</label>
-        <input type="text" ng-model="group_name" class="form-control"
-        placeholder="Group name" required autofocus>
+        owner: {{ user.email }}
 
-        <h3>Persons</h3>
-        <div class="form-group" ng-repeat="i in [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]">
-            <label class="sr-only">Person name {{$i + 1}}</label>
+        <input type="text" ng-model="group_name" class="form-control"
+               placeholder="Group name" required autofocus>
+
+        <h3>Friends</h3>
+        <div class="form-group" ng-repeat="i in group_person_count">
+            <label class="sr-only">Friend name {{$i + 1}}</label>
             <input type="text" ng-model="group_person_names[i]" class="form-control"
-            placeholder="Person name {{i + 1}}">
+                   placeholder="Friend name {{i + 1}}">
         </div>
 
+        <a href ng-click="add_person()"> + Add another person </a>
         <button class="btn btn-lg btn-success btn-block" type="submit">Add</button>
     </form>
 </div>

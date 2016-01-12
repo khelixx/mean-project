@@ -3,10 +3,10 @@
 
 
 <div class="container" ng-controller="RegisterCtrl">
-  
 
-  <form class="form-signin"
-  ng-submit="register()" novalidate>
+
+    <form class="form-signin"
+          ng-submit="register()" novalidate>
 
         <!--  
         <h2 class="form-signin-heading">An inscription, cool !</h2>
@@ -21,40 +21,40 @@
         <br />
         <button class="btn btn-lg btn-success btn-block" type="submit">Sign up</button>
       -->
-      <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-          <h1> Sign up <br/> <small> Thank you to fill your register information </small></h1></br>
-          <span class="red" ng-bind="alert"></span>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-8">
+                <h1> Sign up <br/> <small> Thank you to fill your register information </small></h1></br>
+                <span class="red" ng-bind="alert"></span>
+            </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-offset-2 col-md-7">
-          <div class="form-group">
-            <label for="Email"  >Email address <span class="red">*</span></label>
-            <input type="email" ng-model="email" class="form-control"
-            placeholder="Enter email address" required autofocus>
-          </div>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-7">
+                <div class="form-group">
+                    <label for="Email"  >Email address <span class="red">*</span></label>
+                    <input type="email" ng-model="email" class="form-control"
+                           placeholder="Enter email address" required autofocus>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-md-offset-2 col-md-7">
-          <div class="form-group">
-            <label for="Password" >Password <span class="red">*</span></label>
-            <input type="password" ng-model="passwd" class="form-control" placeholder="Password" required>
-          </div>
-          <span class="red">* required</span>
+        <div class="row">
+            <div class="col-md-offset-2 col-md-7">
+                <div class="form-group">
+                    <label for="Password" >Password <span class="red">*</span></label>
+                    <input type="password" ng-model="passwd" class="form-control" placeholder="Password" required>
+                </div>
+                <span class="red">* required</span>
+            </div>
         </div>
-      </div>
 
-    
-    <div class="row">
-      <div class="col-md-offset-5 col-md-2">
-        <button class="btn btn-lg btn-success btn-block" type="submit">Sign up</button>
-      </div>
-    </div>
-  </form>
+
+        <div class="row">
+            <div class="col-md-offset-5 col-md-2">
+                <button class="btn btn-lg btn-success btn-block" type="submit">Sign up</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 

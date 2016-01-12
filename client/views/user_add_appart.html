@@ -2,37 +2,37 @@
 <div ng-include="'views/inc/user_menu.html'"></div>
 <div ng-class="'assets/css/style.css'"></div>
 
-<div class="container col-md-8" ng-controller="User_appart">
+<div class="container col-md-8" ng-controller="UserAddAppartCtrl">
 
 
-    <div id="form_appart"> 
+    <div id="form_appart">
         <form ng-submit="add_appart()" novalidate>
-            <h3>Name appartment</h3>
+            <h3>Appartment name</h3>
             <input type="text" ng-model="user_appartement" class="form-control"
-            placeholder="Home name" required autofocus>
-                <span class="red" ng-bind="alert"></span>
-                <table>
-                 <tr>
+                   placeholder="Home name" required autofocus>
+            <span class="red" ng-bind="alert"></span>
+            <table>
+                <tr>
                     <td> owner :</td>
-                    <td>{{current_user}}</td>
-                 </tr>
-                 </table>
+                    <td>{{ current_user }}</td>
+                </tr>
+            </table>
             <h3> Group </h3>
 
             <div class="form-group" ng-repeat="i in group_person_count">
                 <table>
                     <tr>
-                        <td><label> Friends email {{i + 1}}</label></td>
+                        <td><label> Friend name {{i + 1}}</label></td>
                         <td><input type="text" ng-model="group_person_names[i]" class="form-control"
-                         placeholder="Person email {{i + 1}}"></td>
-                     </tr>
-                 </table>
-             </div>
+                                   placeholder="Person email {{i + 1}}"></td>
+                    </tr>
+                </table>
+            </div>
 
-             <h8> <a href ng-click="add_person()"> + Add another person </a></h8>
+            <h8> <a href ng-click="add_person()"> + Add another person </a></h8>
 
-             <button class="btn btn-lg btn-success btn-block" type="submit">Add</button>
-         </form>
-     </div>
+            <button class="btn btn-lg btn-success btn-block" type="submit">Add</button>
+        </form>
+    </div>
 
- </div>
+</div>
