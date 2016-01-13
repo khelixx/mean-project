@@ -80,3 +80,12 @@ td{
     border:1px solid black;
 }
 */
+
+#bill{
+    border-bottom: 1px solid lightgrey;
+}
+
+#bill:hover{
+    background-color: lightgrey;
+    cursor:pointer;
+}
