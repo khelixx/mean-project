@@ -35,7 +35,11 @@ var UserSchema = new Schema({
     email: String,
     passwd: String,
     groups: Array,
-    settings: Array
+    settings: {
+        name: {type: String, default: ""},
+        firstname: {type: String, default: ""},
+        phone: {type: String, default: ""}
+    }
 });
 
 // Models
@@ -71,6 +75,7 @@ app.post('/user', function(req, res) {
 app.put('/user', function(req, res) {
     UserModel.findOne({ email: req.body.email }, function (err, user){
         user.groups = req.body.groups;
+        user.settings = req.body.settings;
         user.save();
     });
 });

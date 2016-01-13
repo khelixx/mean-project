@@ -2,14 +2,63 @@
 <div ng-include="'views/inc/user_menu.html'"></div>
 
 <div class="container col-md-12" ng-controller="UserSettingsCtrl">
-    <p>
-        Here, you'll be able to change your name and your firstname... oh wait, I forget, you'll
-        be able to add your phone, nice, isn't it ?
-    </p>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-8">
+            <h1>User informations</h1></br>
+            <span class="red" ng-bind="alert"></span>
+        </div>
+    </div>
 
-    <p>
-        Ok ok, it's really shit, but what do you want to say us ? Your Paypal account ? Oh, you're
-        so interesting suddenly...
-    </p>
-    <p>Something else ?</p>
+    <table class="table" ng-hide="edit">
+        <tr>
+            <th>Name</th>
+            <td><span ng-bind="user_name"></span></td>
+        </tr>
+
+        <tr>
+            <th>First name</th>
+            <td><span ng-bind="user_firstname"></span></td>
+        </tr>
+
+        <tr>
+            <th>Phone</th>
+            <td><span ng-bind="user_phone"></span></td>
+        </tr>
+    </table>
+
+    <button ng-click="edit=true" class="btn btn-lg btn-info" ng-hide="edit">Edit</button>
+
+    <form ng-submit="update()" novalidate ng-show="edit">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-7">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" ng-model="user_name" class="form-control"
+                           placeholder="Enter your name">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-2 col-md-7">
+                <div class="form-group">
+                    <label>First name</label>
+                    <input type="text" ng-model="user_firstname" class="form-control"
+                           placeholder="Enter your first name">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-offset-2 col-md-7">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" ng-model="user_phone" class="form-control"
+                           placeholder="Enter your phone">
+                </div>
+            </div>
+        </div>
+
+        <button class="btn btn-lg btn-success" type="submit">Update</button>
+    </form>
 </div>

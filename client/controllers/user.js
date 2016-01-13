@@ -208,7 +208,7 @@
             });
 
             balance_user.total = balance_user.owed - balance_user.owe;
-            console.log(balance_user);
+        //    console.log(balance_user);
             return balance_user;
         }
 
