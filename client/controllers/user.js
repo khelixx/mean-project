@@ -276,6 +276,43 @@
         }
 
 
+        $scope.delete_comm= function(comm){
+           var tmp_comm = [];
+
+           $rootScope.user.groups.forEach(function(group,index){
+                    group.bill.forEach(function (bill, index_bill) {
+                        if (bill.comm != undefined){
+                                bill.comm.forEach(function(comment, index_comm){
+                                if (comment == comm){
+
+                                    /************************************* remove ************************************/
+                                    bill.comm.splice(bill.comm.indexOf(comm), 1);
+                                }
+                            });
+                        }  
+                    });
+                    tmp_comm.push(group);
+            });
+        }
+
+        $scope.delete_bill = function(bill_delete){
+            console.log(bill_delete);
+            var tmp_bill = [];
+
+            $rootScope.user.groups.forEach(function(group,index){
+                    group.bill.forEach(function (bill, index_bill) {
+                        if (bill.owe == bill_delete.owe && bill.price == bill_delete.price && bill.description == bill_delete.description ){
+                              /************************************* remove************************************/
+                              group.bill.splice(group.bill.indexOf(bill), 1);
+                        }
+                    });
+                    tmp_bill.push(group);
+            });
+            console.log(tmp_bill);
+            $rootScope.user.groups = tmp_bill;
+        }
+
+
         //retrieve money
         $scope.total_balance = function(){
 
