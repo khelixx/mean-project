@@ -2,37 +2,42 @@
 <div ng-include="'views/inc/user_menu.html'"></div>
 <div ng-class="'assets/css/style.css'"></div>
 
-<div class="container col-md-8" ng-controller="UserAddAppartCtrl">
-
-
+<div class="container col-md-12" ng-controller="UserAddAppartCtrl">
     <div id="form_appart">
         <form ng-submit="add_appart()" novalidate>
-            <h3>Appartment name</h3>
-            <input type="text" ng-model="user_appartement" class="form-control"
-                   placeholder="Home name" required autofocus>
-            <span class="red" ng-bind="alert"></span>
-            <table>
-                <tr>
-                    <td> owner :</td>
-                    <td>{{ current_user }}</td>
-                </tr>
-            </table>
-            <h3> Group </h3>
-
-            <div class="form-group" ng-repeat="i in group_person_count">
-                <table>
-                    <tr>
-                        <td><label> Friend name {{i + 1}}</label></td>
-                        <td><input type="text" ng-model="group_person_names[i]" class="form-control"
-                                   placeholder="Person email {{i + 1}}"></td>
-                    </tr>
-                </table>
+         <div class="container col-md-6">
+            <div class="panel panel-default">
+                <div class="panel panel-heading">
+                    <h3>Appartment </h3>
+                </div>
+                <div class="panel-body">
+                    <span class="red" ng-bind="alert"></span></br>
+                    <strong>Appartment owner email : </strong> <span ng-bind="{{ current_user }}"></span></br></br>
+                    <label> Appartment name <span class="red" >*</span> : </label>
+                    <input type="text" ng-model="user_appartement" class="form-control"
+                    placeholder="Enter a appartment name" required autofocus></br>
+                    <button class="btn btn-success " type="submit">Add appartment</button>
+                </div>
             </div>
-
-            <h8> <a href ng-click="add_person()"> + Add another person </a></h8>
-
-            <button class="btn btn-lg btn-success btn-block" type="submit">Add</button>
-        </form>
-    </div>
-
+            <span class="red">* required</span>
+        </div>
+        <div class="container col-md-6">
+            <div class="panel panel-default">
+                <div class="panel panel-heading">
+                    <h3>Group friends (optional)</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <label >Friends names</label>
+                        <div class="form-group" ng-repeat="i in group_person_count">
+                            <input type="text" ng-model="group_person_names[i]" class="form-control"
+                            placeholder="Friend {{i + 1}} name">
+                        </div>
+                        <a href ng-click="add_person()"><button class="btn btn-info" >Add another friend</button> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 </div>
