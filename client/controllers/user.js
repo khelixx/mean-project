@@ -12,19 +12,28 @@
         $scope.check_bill = [ {dashboard : false , friend : false , none : true}];
         $scope.comment ="";
         $scope.checkbox_group = [];
+        $scope.list_friend = null;
 
-        //variable for init facture number of payers
+        //variables for functions
         var count_payers_init = false;
         var display_title = "dashboard";
         var list_user = 'dashboard';
         var display_list = false;
         var update_index = 0;
         var update = "none";
+        var display_bill = "";
+
         $scope.change_group = function(group) {
             var group_json = angular.toJson(group);
             $location.url("/user/update_group?array=" + group_json);
         }
 
+
+        $scope.check_list = function(arg){
+            return arg == list_user;
+        }
+
+        /********************************************************* function for dashboard ***********************************************************/
         function init_dashboard(){
             $rootScope.user.groups.forEach(function(element, index, array){
                 if(element.bill.length != 0){
@@ -33,6 +42,62 @@
             });
         }
 
+
+        $scope.title_dashboard = function(name){
+            var temp = false;
+
+            (name == display_title ? temp = true : temp);
+            (name == display_title ? temp = true : temp);
+            (name == display_title ? temp = true : temp);
+
+            return temp;
+        }
+
+
+
+        $scope.setDashboard = function(){
+            list_user = "dashboard";
+            display_title = "dashboard";
+        }
+
+         //retrieve money
+        $scope.total_balance = function(){
+
+            var balance_user = {
+                owed : 0,
+                owe : 0,
+                total : 0,
+                total_owed : [],
+                total_owe : []
+            }
+
+            $rootScope.user.groups.forEach(function(group,index){
+                if (group.bill) {
+                    group.bill.forEach(function (bill, index_bill) {
+                        bill.owed.forEach(function (owed_person, index_person) {
+                            if (owed_person.person == "you" && bill.owe != "you") {
+                                balance_user.owe += owed_person.money;
+                                balance_user.total_owe.push({person: bill.owe, money: owed_person.money});
+                            }
+
+
+                            if (owed_person.person != "you" && bill.owe == "you") {
+                                balance_user.owed += owed_person.money;
+                                balance_user.total_owed.push(owed_person);
+                            }
+                        });
+                    });
+                }
+            });
+
+            balance_user.total = balance_user.owed - balance_user.owe;
+            return balance_user;
+        }
+
+        $scope.review = $scope.total_balance();
+        
+
+        /********************************************************** function for a group *****************************************************************/
         $scope.show_list_group = function(current_group){
             var list_resume = [];
            
@@ -55,6 +120,7 @@
             $scope.list_group = list_resume;
         }
 
+        //Display in group membre frame the debt of user to you
         $scope.debt = function (member){
               var count = 0;
               $rootScope.user.groups.forEach(function(group,index){
@@ -72,12 +138,6 @@
             return count;
         }
 
-
-        $scope.setDashboard = function(){
-            list_user = "dashboard";
-            display_title = "dashboard";
-        }
-
         $scope.show_group = function(group) {
             $scope.current_groupe = group;
             init_dashboard();
@@ -86,8 +146,10 @@
             $scope.show_list_group($scope.current_groupe);
         }
 
-        var display_bill = "";
 
+
+        /***************************************************************** functions for bills *************************************************************/
+        
         $scope.setBill = function(bill){
             if (display_bill == bill){
                 display_bill = "";
@@ -99,10 +161,6 @@
 
         $scope.update_or_display_bill = function(bill_description){
             return display_bill == bill_description ;
-        }
-
-        $scope.check_list = function(arg){
-            return arg == list_user;
         }
 
         $scope.check_update = function(){
@@ -283,7 +341,7 @@
                     }
                 });
 
-
+            $scope.show_list_group($scope.current_groupe);
             $scope.close_bill();
         }
 
@@ -314,6 +372,7 @@
                         $rootScope.user = user;     // Update user data.
                     }
                 });
+             $scope.show_list_group($scope.current_groupe);
         }
 
 
@@ -325,15 +384,17 @@
                         if (bill.comm != undefined){
                                 bill.comm.forEach(function(comment, index_comm){
                                 if (comment == comm){
-
-                                    /************************************* remove ************************************/
                                     bill.comm.splice(bill.comm.indexOf(comm), 1);
                                 }
                             });
                         }  
                     });
-                    tmp_comm.push(group);
+
+                  //  tmp_comm.push(group);
             });
+
+            $rootScope.user.$update();
+            $scope.review = $scope.total_balance();
         }
 
         $scope.delete_bill = function(bill_delete){
@@ -343,54 +404,19 @@
             $rootScope.user.groups.forEach(function(group,index){
                     group.bill.forEach(function (bill, index_bill) {
                         if (bill.owe == bill_delete.owe && bill.price == bill_delete.price && bill.description == bill_delete.description ){
-                              /************************************* remove************************************/
                               group.bill.splice(group.bill.indexOf(bill), 1);
                         }
                     });
-                    tmp_bill.push(group);
-            });
-            console.log(tmp_bill);
-            $rootScope.user.groups = tmp_bill;
-        }
 
-
-        //retrieve money
-        $scope.total_balance = function(){
-
-            var balance_user = {
-                owed : 0,
-                owe : 0,
-                total : 0,
-                total_owed : [],
-                total_owe : []
-            }
-
-            $rootScope.user.groups.forEach(function(group,index){
-                if (group.bill) {
-                    group.bill.forEach(function (bill, index_bill) {
-                        bill.owed.forEach(function (owed_person, index_person) {
-                            if (owed_person.person == "you" && bill.owe != "you") {
-                                balance_user.owe += owed_person.money;
-                                balance_user.total_owe.push({person: bill.owe, money: owed_person.money});
-                            }
-
-
-                            if (owed_person.person != "you" && bill.owe == "you") {
-                                balance_user.owed += owed_person.money;
-                                balance_user.total_owed.push(owed_person);
-                            }
-                        });
-                    });
-                }
+                   // tmp_bill.push(group);
             });
 
-            balance_user.total = balance_user.owed - balance_user.owe;
-            return balance_user;
+            //console.log(tmp_bill);
+            //$rootScope.user.groups = tmp_bill;
+            $rootScope.user.$update();
+            $scope.review = $scope.total_balance();
+            $scope.show_list_group($scope.current_groupe);
         }
-
-        $scope.review = $scope.total_balance();
-        $scope.list_friend = null;
-        $scope.current_user = $rootScope.user.email;
 
 
         $scope.show_listbill_friend = function(friend){
@@ -457,22 +483,13 @@
          
         }
 
+
         $scope.check_money = function(money){
             return money >0;
         }
 
         $scope.check_user_in_array = function(money){
             return (money >0 || money < 0);
-        }
-
-        $scope.title_dashboard = function(name){
-            var temp = false;
-
-            (name == display_title ? temp = true : temp);
-            (name == display_title ? temp = true : temp);
-            (name == display_title ? temp = true : temp);
-
-            return temp;
         }
 
     });

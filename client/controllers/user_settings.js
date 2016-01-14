@@ -7,20 +7,14 @@
         $scope.user_phone = $rootScope.user.settings.phone;
 
         $scope.update = function () {
-            UserFactory.get({email: $rootScope.user.email, passwd: $rootScope.user.passwd},
-                function (user) {
-                    if (user.email) {
-                        user.settings = {
-                            name: $scope.user_name,
-                            firstname: $scope.user_firstname,
-                            phone: $scope.user_phone
-                        }
-                        
-                        user.$update();
-                        $rootScope.user = user;     // Update user data.
-                        $location.url("/user");
-                    }
-                });
+            $rootScope.user.settings = {
+                name: $scope.user_name,
+                firstname: $scope.user_firstname,
+                phone: $scope.user_phone
+            }
+
+            $rootScope.user.$update();
+            $location.url("/user");
         }
     });
 })();

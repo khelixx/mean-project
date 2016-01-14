@@ -186,12 +186,13 @@
                                         <td>
                                             <div ng-repeat="bills in list_group track by $index">
                                                <div href ng-click="setBill(bills.description)" id="bill">
-                                                   <strong> bill : <span ng-bind="bills.description" /></strong> <button href ng-click="update_bill(bills)"> update </button><button href ng-click="delete_bill(bills)"> delete </button> </br>
+                                                   <strong> bill : <span ng-bind="bills.description" /></strong> </br>
                                                    <span ng-bind="bills.owe" /> paid :</span> 
                                                    <span ng-bind="bills.price" /></span></br>
                                                    <span ng-bind="bills.owe" /> lent : <span ng-bind="bills.lent" /></span></br>
                                                 </div>
                                                 <div ng-show="update_or_display_bill(bills.description)">
+                                                        <button href ng-click="update_bill(bills)"> update </button><button href ng-click="delete_bill(bills)"> delete </button>
                                                         <span ng-bind= "bills.owe"/> paid <span ng-bind = "bills.price"/>
                                                         <div ng-repeat="person in bills.owed track by $index">
                                                             <span ng-bind= "person.person "/> owes   <span ng-bind= "person.money "/>
