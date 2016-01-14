@@ -1,23 +1,41 @@
 
 <div ng-include="'views/inc/user_menu.html'"></div>
 
-<div class="container col-md-8" ng-controller="UserAddGroupCtrl">
-    <span class="red" ng-bind="alert"></span>
+<div class="container col-md-12" ng-controller="UserAddGroupCtrl">
     <form ng-submit="add_group()" novalidate>
-        <h3>Group</h3>
-        <label class="sr-only">Name</label>
-        <input type="text" ng-model="group_name" class="form-control"
-               placeholder="Group name" required autofocus>
-        owner: <span ng-bind="user.email"></span>
-
-        <h3>Friends</h3>
-        <div class="form-group" ng-repeat="i in group_person_count">
-            <label class="sr-only">Friend name {{$i + 1}}</label>
-            <input type="text" ng-model="group_person_names[i]" class="form-control"
-                   placeholder="Friend name {{i + 1}}">
+        <div class="container col-md-6">
+            <div class="panel panel-default">
+                <div class="panel panel-heading">
+                    <h3>Group </h3>
+                </div>
+                <div class="panel-body">
+                    <span class="red" ng-bind="alert"></span></br>
+                    <strong>Group owner email : </strong> <span ng-bind="user.email"></span></br></br>
+                    <label> Group name <span class="red" >*</span> : </label>
+                    <input type="text" ng-model="group_name" class="form-control"
+                    placeholder="Enter a group name" required autofocus></br>
+                    <button class="btn btn-success " type="submit">Add group</button>
+                </div>
+            </div>
+            <span class="red">* required</span>
         </div>
-
-        <a href ng-click="add_person()"> + Add another person </a>
-        <button class="btn btn-lg btn-success btn-block" type="submit">Add</button>
+        <div class="container col-md-6">
+            <div class="panel panel-default">
+                <div class="panel panel-heading">
+                    <h3>Group friends (optional)</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <label >Friends names</label>
+                        <div class="form-group" ng-repeat="i in group_person_count">
+                            <input type="text" ng-model="group_person_names[i]" class="form-control"
+                            placeholder="Friend {{i + 1}} name">
+                        </div>
+                        <a href ng-click="add_person()"><button class="btn btn-info" >Add another friend</button> </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </form>
 </div>
+

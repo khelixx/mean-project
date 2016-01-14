@@ -2,63 +2,50 @@
 <div ng-include="'views/inc/user_menu.html'"></div>
 
 <div class="container col-md-12" ng-controller="UserSettingsCtrl">
-    <div class="row">
-        <div class="col-md-offset-2 col-md-8">
-            <h1>User informations</h1></br>
-            <span class="red" ng-bind="alert"></span>
-        </div>
+    <div class="container col-md-8">
+        <h1>User information</h1></br>
+        <span class="red" ng-bind="alert"></span>
+        <table class="table" ng-hide="edit">
+            <tr>
+                <th>Name</th>
+                <td><span ng-bind="user_name"></span></td>
+            </tr>
+
+            <tr>
+                <th>First name</th>
+                <td><span ng-bind="user_firstname"></span></td>
+            </tr>
+
+            <tr>
+                <th>Phone</th>
+                <td><span ng-bind="user_phone"></span></td>
+            </tr>
+        </table>
+
+        <button ng-click="edit=true" class="btn btn-info" ng-hide="edit">Edit info</button>
     </div>
 
-    <table class="table" ng-hide="edit">
-        <tr>
-            <th>Name</th>
-            <td><span ng-bind="user_name"></span></td>
-        </tr>
-
-        <tr>
-            <th>First name</th>
-            <td><span ng-bind="user_firstname"></span></td>
-        </tr>
-
-        <tr>
-            <th>Phone</th>
-            <td><span ng-bind="user_phone"></span></td>
-        </tr>
-    </table>
-
-    <button ng-click="edit=true" class="btn btn-lg btn-info" ng-hide="edit">Edit</button>
-
     <form ng-submit="update()" novalidate ng-show="edit">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-7">
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" ng-model="user_name" class="form-control"
-                           placeholder="Enter your name">
-                </div>
+        <div class="container col-md-8">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" ng-model="user_name" class="form-control"
+                placeholder="Enter your name">
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-offset-2 col-md-7">
-                <div class="form-group">
-                    <label>First name</label>
-                    <input type="text" ng-model="user_firstname" class="form-control"
-                           placeholder="Enter your first name">
-                </div>
+          
+            <div class="form-group">
+                <label>First name</label>
+                <input type="text" ng-model="user_firstname" class="form-control"
+                placeholder="Enter your first name">
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-offset-2 col-md-7">
-                <div class="form-group">
-                    <label>Phone</label>
-                    <input type="text" ng-model="user_phone" class="form-control"
-                           placeholder="Enter your phone">
-                </div>
+            
+            <div class="form-group">
+                <label>Phone</label>
+                <input type="text" ng-model="user_phone" class="form-control"
+                placeholder="Enter your phone">
             </div>
-        </div>
 
-        <button class="btn btn-lg btn-success" type="submit">Update</button>
+            <button class="btn btn-success" type="submit">Update</button>
+        </div>
     </form>
 </div>
