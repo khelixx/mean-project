@@ -1,7 +1,6 @@
 (function() {
     'use strict';
 
-    // Hum, very hard.
     angular.module('payMeApp').controller('UserAddAppartCtrl', function($scope, $rootScope, $location, UserFactory){
 
         $scope.user_appartement = "";
@@ -17,23 +16,14 @@
                 return;
             }
 
-            // Get user in database to update it. Strangely, even the user comes from database, it's
-            // not possible to update it directly (or I didn't do the good method).
-            UserFactory.get({ email: $rootScope.user.email, passwd: $rootScope.user.passwd },
-                function(user) {
-                    if (user.email) {
-                        user.groups.push({
-                            // flat : $scope.user_appartement,
-                            name: $scope.user_appartement,
-                            persons: $scope.group_person_names
-                        });
+            $rootScope.user.groups.push({
+                name: $scope.user_appartement,
+                persons: $scope.group_person_names,
+                bill: []
+            });
 
-                        user.$update();
-                        $rootScope.user = user;     // Update user data.
-
-                        $location.url("/user");
-                    }
-                });
+            $rootScope.user.$update();
+            $location.url("/user");
         }
 
         $scope.add_person = function(){

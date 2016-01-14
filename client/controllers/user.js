@@ -284,15 +284,16 @@
                         if (bill.comm != undefined){
                                 bill.comm.forEach(function(comment, index_comm){
                                 if (comment == comm){
-
-                                    /************************************* remove ************************************/
                                     bill.comm.splice(bill.comm.indexOf(comm), 1);
                                 }
                             });
                         }  
                     });
-                    tmp_comm.push(group);
+
+                  //  tmp_comm.push(group);
             });
+
+            $rootScope.user.$update();
         }
 
         $scope.delete_bill = function(bill_delete){
@@ -302,14 +303,16 @@
             $rootScope.user.groups.forEach(function(group,index){
                     group.bill.forEach(function (bill, index_bill) {
                         if (bill.owe == bill_delete.owe && bill.price == bill_delete.price && bill.description == bill_delete.description ){
-                              /************************************* remove************************************/
                               group.bill.splice(group.bill.indexOf(bill), 1);
                         }
                     });
-                    tmp_bill.push(group);
+
+                   // tmp_bill.push(group);
             });
-            console.log(tmp_bill);
-            $rootScope.user.groups = tmp_bill;
+
+            //console.log(tmp_bill);
+            //$rootScope.user.groups = tmp_bill;
+            $rootScope.user.$update();
         }
 
 

@@ -14,23 +14,14 @@
                 return;
             }
 
-            // Get user in database to update it. Strangely, even the user comes from database, it's
-            // not possible to update it directly (or I didn't do the good method).
-            UserFactory.get({ email: $rootScope.user.email, passwd: $rootScope.user.passwd },
-                function(user) {
-                    if (user.email) {
-                        user.groups.push({
-                            name: $scope.group_name,
-                            persons: $scope.group_person_names,
-                            bill: []
-                        });
+            $rootScope.user.groups.push({
+                name: $scope.group_name,
+                persons: $scope.group_person_names,
+                bill: []
+            });
 
-                        user.$update();
-                        $rootScope.user = user;     // Update user data.
-
-                        $location.url("/user");
-                    }
-                });
+            $rootScope.user.$update();
+            $location.url("/user");
         }
 
         $scope.add_person = function() {
