@@ -2,7 +2,6 @@
     'use strict';
 
     angular.module('payMeApp').controller('UserAddAppartCtrl', function($scope, $rootScope, $location, UserFactory){
-
         $scope.user_appartement = "";
         $scope.group_person_names = [];
         $scope.group_person_count = [0,1,2,3];
@@ -12,7 +11,7 @@
 
         $scope.add_appart = function(){
             if ($scope.user_appartement == "") {
-                $scope.alert = "No apartment name";
+                $scope.alert = "No appartment name";
                 return;
             }
 
@@ -27,8 +26,7 @@
         }
 
         $scope.add_person = function(){
-            $scope.group_person_count.push(count_person_in_addition);
-            count_person_in_addition ++;
+            $scope.group_person_count.push(count_person_in_addition++);
         }
     });
 })();
