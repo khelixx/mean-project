@@ -171,7 +171,6 @@
                         </table>
                     </div>
                 </div>
-
                 <div ng-show="check_list('group')">
                     <div class="col-md-12">
                         <table class="table table-bordered">
@@ -199,6 +198,7 @@
                                                     <button ng-click="delete_bill(bills)" class="btn btn-sm btn-danger"> 
                                                         Delete bill
                                                     </button> 
+                                                     <button href ng-click="update_bill(bills)" class="btn btn-sm btn-warning"> update </button>
                                                 </div>
                                             </div></br>
 
@@ -313,7 +313,8 @@
         </br>
         <div class="row col-xs-offset-1">
             <div style="margin-bottom:15px ;">
-                <a href ng-click="save()"><button class="btn btn-success" > Save </button></a>
+                <a  href ng-click="save()"><button ng-show="check_update()" class="btn btn-success" > save </button></a>
+                <a  href ng-click="save('update')"><button ng-hide="check_update()" class="btn btn-success" > modify </button></a>
                 <a href ng-click="close_bill()"><button class="btn btn-danger" > Close</button></a>
             </div>
         </div>
