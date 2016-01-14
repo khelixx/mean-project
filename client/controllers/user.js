@@ -11,13 +11,15 @@
         $scope.opacity = 1;
         $scope.check_bill = [ {dashboard : false , friend : false , none : true}];
         $scope.comment ="";
+        $scope.checkbox_group = [];
 
         //variable for init facture number of payers
         var count_payers_init = false;
         var display_title = "dashboard";
         var list_user = 'dashboard';
         var display_list = false;
-
+        var update_index = 0;
+        var update = "none";
         $scope.change_group = function(group) {
             var group_json = angular.toJson(group);
             $location.url("/user/update_group?array=" + group_json);
@@ -103,6 +105,10 @@
             return arg == list_user;
         }
 
+        $scope.check_update = function(){
+            return update == "none";
+        }
+
         var bool_check_bill = false;
         $scope.check_bill = function(param){
             if(!bool_check_bill){
@@ -127,7 +133,6 @@
         $scope.add_bill = function(){
             $scope.bill_show = true;
             $scope.number_payers = $scope.current_groupe.persons.length + 1;
-            $scope.checkbox_group = [];
             $scope.description_bill = null;
             angular.element("#transparency")[0].style.opacity = 0.3;
             $scope.price = 0.00;
@@ -146,16 +151,42 @@
             }
         };
 
+         $scope.update_bill = function(bill){
+            update = "update";
+            $scope.bill_show = true;
+            bill.owed.forEach(function(owed,index){
+                $scope.checkbox_group.push({ person : owed.person , value :true })
+            });
+
+            $scope.number_payers = bill.owed.length;
+            $scope.description_bill = bill.description;
+            $scope.price = bill.price;
+            $scope.payer = bill.owe;
+
+            var add_bill_bdd = $rootScope.user.groups;
+
+            add_bill_bdd.forEach(function(element, index, array){
+                if ( element.name == $scope.current_groupe.name){
+                    element.bill.forEach(function(bill_element,index_bill){
+                        (bill_element.description == bill.description ? update_index = index_bill : update_index);
+                    });
+                }
+            });
+
+            angular.element("#transparency")[0].style.opacity = 0.3;
+        }
+
         //close bill interface
         $scope.close_bill = function(){
             $scope.check_payer = false;
             $scope.check_count_payer = false;
-
+            $scope.checkbox_group = [];
             $scope.bill_show = false;
             $scope.payer = "you";
             $scope.opacity = 1;
             count_payers_init = false;
             angular.element("#transparency")[0].style.opacity = 1;
+            update = "none";
         }
 
 
@@ -192,8 +223,9 @@
         }
 
 
+
         //Add the bill in user
-        $scope.save = function (){
+        $scope.save = function (ope){
 
             var add_bill_bdd = $rootScope.user.groups;
             var owed_array = [];
@@ -227,8 +259,15 @@
                         bill : element.bill
                     }
 
-                    tmp_group.bill.push(bill_current);
-                    element = tmp_group;
+                    if (ope != undefined){
+                        console.log("salut");
+                        tmp_group.bill[update_index] = bill_current;
+                    }
+                    else {
+                        tmp_group.bill.push(bill_current);
+                        element = tmp_group;
+                    }
+                  
                 }
             });
 
@@ -237,8 +276,10 @@
                 function(user) {
                     if (user.email) {
                         user.groups = add_bill_bdd;
+                        console.log(user);
                         user.$update();
-                        $rootScope.user = user;     // Update user data.
+                        
+                        $rootScope.user = user;
                     }
                 });
 

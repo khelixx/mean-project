@@ -186,7 +186,7 @@
                                         <td>
                                             <div ng-repeat="bills in list_group track by $index">
                                                <div href ng-click="setBill(bills.description)" id="bill">
-                                                   <strong> bill : <span ng-bind="bills.description" /></strong> <button href ng-click="delete_bill(bills)"> delete </button> </br>
+                                                   <strong> bill : <span ng-bind="bills.description" /></strong> <button href ng-click="update_bill(bills)"> update </button><button href ng-click="delete_bill(bills)"> delete </button> </br>
                                                    <span ng-bind="bills.owe" /> paid :</span> 
                                                    <span ng-bind="bills.price" /></span></br>
                                                    <span ng-bind="bills.owe" /> lent : <span ng-bind="bills.lent" /></span></br>
@@ -276,7 +276,8 @@
         </br>
         <div class="row col-xs-offset-1">
             <div style="margin-bottom:15px ;">
-                <a href ng-click="save()"><button class="btn btn-success" > Save </button></a>
+                <a  href ng-click="save()"><button ng-show="check_update()" class="btn btn-success" > save </button></a>
+                <a  href ng-click="save('update')"><button ng-hide="check_update()" class="btn btn-success" > modify </button></a>
                 <a href ng-click="close_bill()"><button class="btn btn-danger" > Close</button></a>
             </div>
         </div>

@@ -15,10 +15,9 @@
                             firstname: $scope.user_firstname,
                             phone: $scope.user_phone
                         }
-
+                        
                         user.$update();
                         $rootScope.user = user;     // Update user data.
-
                         $location.url("/user");
                     }
                 });
