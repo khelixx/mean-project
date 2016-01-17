@@ -40,11 +40,12 @@
 
     <div class="panel panel-default">
         <div class="panel panel-heading">
-            <h4> Dashboard </h4>            
+            <h4> View </h4>            
         </div>
         <div class="panel-body">
             <div class="table-responsive">
-               <a href ng-click="setDashboard()"> <span> Dashboard </span></a>
+               <a href ng-click="setDashboard()"> <span> Dashboard </span></a> </br>
+               <a href ng-click="showAllDepenses()"> <span> All expenses </span></a>
            </div>
        </div>
    </div>
@@ -70,6 +71,8 @@
                     <div ng-show="check_bill('friend')">
                         <div ng-repeat="bill in list_friend track by $index">
                             <div ng-show = "check_user_in_array(bill.money)">
+
+
                                 <div ng-show = "check_money(bill.money)">
                                     <table class="table table-striped table-bordered table-hover">
                                         <tr>
@@ -99,78 +102,116 @@
                     </div>
                 </div>
 
+
+
                 <div ng-show="check_bill('dashboard')">
-                </br>
-                <table class="table table-bordered">
-                    <div class="table-responsive">
-                        <thead>
-                            <tr>
-                                <th class="danger">You owe</th>
-                                <th class="info">Total Balance</th>
-                                <th class="success">You are owed</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <span ng-bind=" review.owe" />
-                                </td>
-                                <td>
-                                    <span ng-bind=" review.total"/>
-                                </td>
-                                <td>
-                                    <span ng-bind=" review.owed"/>
-                                </td>
-                            </tr>
-                        </tbody>
+                    </br>
+                    <table class="table table-bordered">
+                        <div class="table-responsive">
+                            <thead>
+                                <tr>
+                                    <th class="danger">You owe</th>
+                                    <th class="info">Total Balance</th>
+                                    <th class="success">You are owed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <span ng-bind=" review.owe" />
+                                    </td>
+                                    <td>
+                                        <span ng-bind=" review.total"/>
+                                    </td>
+                                    <td>
+                                        <span ng-bind=" review.owed"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div ng-show="check_list('dashboard')">
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <div class="table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th class="danger">You owe</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div ng-repeat="persons_owe in review.total_owe track by $index">
+                                                    <strong> to <span ng-bind="persons_owe.person" /></strong> </br>
+                                                    <span ng-bind="persons_owe.money" /> $</span></br>
+                                                    <hr style="width:100%; color:black;" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </div>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-bordered">
+                                <div class="table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th class="success">You are owed</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div ng-repeat="persons_owed in review.total_owed track by $index">
+                                                    <strong> by   <span ng-bind="persons_owed.person" /> </strong></br>
+                                                    <span ng-bind="persons_owed.money" /> $ </span></br>
+                                                    <hr style="width:100%; color:black;" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+
+
+                 <div ng-show="check_list('expenses')">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <div class="table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th class="danger"> Bills </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 <tr>
+                                    <td>
+                                        <div ng-repeat="bills in list_group track by $index">
+                                                 <a href ng-click="show_group(bills.group)"> <strong> Group : {{ bills.group.name}} </strong> </a></br>
+                                                <strong> Bill description : </strong> </br>
+                                                <span ng-bind="bills.description" /></br>
+                                                <strong><span ng-bind="bills.owe" /> paid : </strong> 
+                                                <span ng-bind="bills.price" /></br>
+                                                <strong><span ng-bind="bills.owe" /> lent : </strong> 
+                                                <span ng-bind="bills.lent" /></br></br>
+                                            
+                                            </br>
+                                        <hr style="width:100%; color:black;" />
+                                          
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </div>
                     </table>
-                </div>
-                <div ng-show="check_list('dashboard')">
-                    <div class="col-md-6">
-                        <table class="table table-bordered">
-                            <div class="table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th class="danger">You owe</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div ng-repeat="persons_owe in review.total_owe track by $index">
-                                                <strong> to <span ng-bind="persons_owe.person" /></strong> </br>
-                                                <span ng-bind="persons_owe.money" /> $</span></br>
-                                                <hr style="width:100%; color:black;" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </div>
-                        </table>
-                    </div>
-                    <div class="col-md-6">
-                        <table class="table table-bordered">
-                            <div class="table-responsive">
-                                <thead>
-                                    <tr>
-                                        <th class="success">You are owed</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <div ng-repeat="persons_owed in review.total_owed track by $index">
-                                                <strong> by   <span ng-bind="persons_owed.person" /> </strong></br>
-                                                <span ng-bind="persons_owed.money" /> $ </span></br>
-                                                <hr style="width:100%; color:black;" />
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </div>
-                        </table>
-                    </div>
-                </div>
+                 </div>
+             </div> 
+
                 <div ng-show="check_list('group')">
                     <div class="col-md-12">
                         <table class="table table-bordered">
@@ -253,8 +294,8 @@
     </div>
 </div>
 </div>
-
-
+</div>
+</div>
 <div ng-show="check_bill('none')">
     <h3 > Il n'y a pas d'annonce</h3>
 </div>
