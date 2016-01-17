@@ -82,7 +82,7 @@
                                 count += owed_person.money;
                             }
                         });
-                        list_resume.push({group : group.name ,owe : bill.owe , lent : count , owed : bill.owed , price : bill.price , description : bill.description, comm : bill.comm })
+                        list_resume.push({group : group ,owe : bill.owe , lent : count , owed : bill.owed , price : bill.price , description : bill.description, comm : bill.comm })
                     });
             });
 
@@ -154,8 +154,12 @@
                 if (group.name == $scope.current_groupe.name){
                     group.bill.forEach(function(bill,index_bill){
                         bill.owed.forEach(function(owed_person,index_person){
-                            if (owed_person.person == member){
+                            if (owed_person.person == member && bill.owe == "you"){
                                 count += owed_person.money;
+                            }
+
+                             if (owed_person.person == "you" && bill.owe == member){
+                                count -= owed_person.money;
                             }
                         });
                     });
@@ -262,7 +266,6 @@
             });
             angular.element("#transparency")[0].style.opacity = 0.3;
             $scope.review = $scope.total_balance();
-            $scope.$apply();
         }
 
         //close bill interface
@@ -272,6 +275,7 @@
             $scope.checkbox_group = [];
             $scope.bill_show = false;
             $scope.payer = "you";
+            $scope.number_payers = 0;
             $scope.opacity = 1;
             count_payers_init = false;
             angular.element("#transparency")[0].style.opacity = 1;
@@ -476,6 +480,7 @@
                    list_user = "group";
                     $rootScope.user.groups.forEach(function(group,index){
                         if (group.name == group_friend){
+                            $scope.current_groupe = group;
                             group.bill.forEach(function(bill,index_bill){
                             var bool_here = false;
                             var count = 0;
@@ -489,15 +494,13 @@
                                     }
                                 });
                                 if (bool_here == true || bill.owe == $scope.friend_name ) {
-                                    friend_resume.push({group : group.name, owe : bill.owe , lent : count , owed : bill.owed , price : bill.price , description : bill.description });
+                                    friend_resume.push({group : group, owe : bill.owe , lent : count , owed : bill.owed , price : bill.price , description : bill.description });
                                 }
                                 
                             });
                         }
                     });
                      $scope.list_group =  friend_resume;
-                     display_list = true;
-                     $scope.current_groupe = group_friend;
             }
             else{
                 list_user = "none";

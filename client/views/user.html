@@ -192,7 +192,7 @@
                                  <tr>
                                     <td>
                                         <div ng-repeat="bills in list_group track by $index">
-                                                <strong> Group : {{ bills.group}} </strong></br>
+                                                 <a href ng-click="show_group(bills.group)"> <strong> Group : {{ bills.group.name}} </strong> </a></br>
                                                 <strong> Bill description : </strong> </br>
                                                 <span ng-bind="bills.description" /></br>
                                                 <strong><span ng-bind="bills.owe" /> paid : </strong> 
