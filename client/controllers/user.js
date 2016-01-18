@@ -68,6 +68,21 @@
             $scope.current_groupe = null;
         }
 
+        $scope.setActuality = function(){
+            list_user = "actuality";
+
+            var list_resume = [];
+           
+            $rootScope.user.groups.forEach(function(group,index){
+                    group.actuality.forEach(function(actuality,index_bill){
+                        list_resume.push(actuality);
+                    });
+            });
+
+            console.log(list_resume);
+             $scope.list_group = list_resume;
+        }
+
         $scope.showAllDepenses = function(){
             $scope.check_bill.dashboard = true;$scope.check_bill.friend = false;$scope.check_bill.none = false;
             list_user = "expenses";
@@ -337,28 +352,49 @@
 
             add_bill_bdd.forEach(function(element, index, array){
                 if ( element.name == $scope.current_groupe.name){
-
                     var bill_current = {
                         owe : $scope.payer,
                         owed : owed_array,
                         price : $scope.price,
-                        description : $scope.description_bill
+                        description : $scope.description_bill,
+                        date : new Date().getTime()
                     }
 
+
+                    console.log(bill_current);
                     var tmp_group = {
                         name : element.name,
                         persons : element.persons,
-                        bill : element.bill
+                        bill : element.bill,
+                        actuality : element.actuality
                     }
 
                     if (ope != undefined){
+                         var actuality = {
+                            action : "update",
+                            bill : bill_current.description,
+                            date : bill_current.date,
+                            group : element.name
+                        }
+                        
+                        tmp_group.actuality.push(actuality);
+
                         tmp_group.bill[update_index] = bill_current;
                     }
                     else {
                         tmp_group.bill.push(bill_current);
+
+                        var actuality = {
+                            action : "bill",
+                            bill : bill_current.description,
+                            date : bill_current.date,
+                            group : element.name
+                        }
+
+                        tmp_group.actuality.push(actuality);
                         element = tmp_group;
                     }
-                  
+                    console.log(element);
                 }
             });
 
@@ -373,6 +409,7 @@
                         $rootScope.user = user;
                     }
                 });
+
 
             $scope.show_list_group($scope.current_groupe);
             $scope.close_bill();

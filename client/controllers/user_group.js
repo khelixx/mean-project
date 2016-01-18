@@ -17,7 +17,8 @@
             $rootScope.user.groups.push({
                 name: $scope.group_name,
                 persons: $scope.group_person_names,
-                bill: []
+                bill: [],
+                actuality : [{action : "group", date : new Date().getTime(), group :$scope.group_name}]
             });
 
             $rootScope.user.$update();
