@@ -11,7 +11,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node server/app.js"
+    "start": "node server/app.js",
+    "postinstall": "mongorestore misc/data",
+    "savedb": "mongodump --db test --collection usermodels -o misc/data"
   },
   "author": "",
   "license": "ISC"
