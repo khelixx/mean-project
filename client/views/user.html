@@ -45,7 +45,8 @@
         <div class="panel-body">
             <div class="table-responsive">
                <a href ng-click="setDashboard()"> <span> Dashboard </span></a> </br>
-               <a href ng-click="showAllDepenses()"> <span> All expenses </span></a>
+               <a href ng-click="showAllDepenses()"> <span> All expenses </span></a></br>
+               <a href ng-click="setActuality()"> <span> Actuality </span></a></br>
            </div>
        </div>
    </div>
@@ -191,7 +192,7 @@
                                 <tbody>
                                  <tr>
                                     <td>
-                                        <div ng-repeat="bills in list_group track by $index">
+                                        <div ng-repeat="bills in list_group| orderBy:'date':true">
                                                  <a href ng-click="show_group(bills.group)"> <strong> Group : {{ bills.group.name}} </strong> </a></br>
                                                 <strong> Bill description : </strong> </br>
                                                 <span ng-bind="bills.description" /></br>
@@ -203,6 +204,41 @@
                                             </br>
                                         <hr style="width:100%; color:black;" />
                                           
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </div>
+                    </table>
+                 </div>
+             </div> 
+
+
+              <div ng-show="check_list('actuality')">
+                    <div class="col-md-12">
+                        <table class="table table-bordered">
+                            <div class="table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th class="danger"> Actuality </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                 <tr>
+                                    <td>
+                                        <div ng-repeat="actuality in list_group| orderBy:'date':true">
+                                               <div ng-if="actuality.action == 'bill'">
+                                                    <strong> You add a bill in <span ng-bind="actuality.group"/> with description : <span ng-bind="actuality.bill"/> </strong> 
+                                                </div>
+
+                                                <div ng-if="actuality.action == 'group'">
+                                                    <strong> You add a group with name :  <span ng-bind="actuality.group"/> </strong> 
+                                                </div>
+
+                                                <div ng-if="actuality.action == 'update'">
+                                                    <strong> You update the bill :  <span ng-bind="actuality.bill"/> </strong> 
+                                                </div>
+                                                 <hr style="width:100%; color:black;" />
                                         </div>
                                     </td>
                                 </tr>
