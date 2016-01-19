@@ -12,8 +12,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node server/app.js",
-    "postinstall": "mongorestore misc/data",
-    "savedb": "mongodump --db test --collection usermodels -o misc/data"
+    "postinstall": "mongo test < misc/script.js"
   },
   "author": "",
   "license": "ISC"
