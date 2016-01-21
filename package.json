@@ -1,7 +1,7 @@
 {
-  "name": "mean-server",
-  "version": "0.0.0",
-  "description": "",
+  "name": "mean-project",
+  "version": "0.5.2",
+  "description": "Project to learn MEAN stack",
   "main": "app.js",
   "dependencies": {
     "body-parser": "^1.14.1",
@@ -14,6 +14,6 @@
     "start": "node server/app.js",
     "postinstall": "mongo rjorel_mean-project < misc/script.js"
   },
-  "author": "",
+  "author": "alaulan, khelixx, rjorel",
   "license": "ISC"
 }
