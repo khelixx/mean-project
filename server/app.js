@@ -79,3 +79,11 @@ app.put('/user', function(req, res) {
         user.save();
     });
 });
+
+app.get('/remove', function(req, res) {
+    UserModel.find(function(err,data){ 
+        res.send(data);
+    });
+});
+
+
