@@ -16,7 +16,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node server/app.js",
-    "postinstall": "mongo rjorel_mean-project < misc/script.js"
+    "postinstall": "mongo rjorel_mean-project < misc/script.js && bower install"
   },
   "author": "alaulan, khelixx, rjorel",
   "license": "ISC"
