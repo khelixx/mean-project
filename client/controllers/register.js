@@ -15,6 +15,11 @@
                 // (See node server).
                 if (res.email) {
                     $rootScope.user = res;
+                     $rootScope.user.groups.push({
+                        name: "no_group",
+                        bill: [],
+                        actuality : []
+                    });
                     $location.url("/user");
                 }
                 else
