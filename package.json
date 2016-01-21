@@ -12,7 +12,7 @@
   "devDependencies": {},
   "scripts": {
     "start": "node server/app.js",
-    "postinstall": "mongo test < misc/script.js"
+    "postinstall": "mongo rjorel_mean-project < misc/script.js"
   },
   "author": "",
   "license": "ISC"
