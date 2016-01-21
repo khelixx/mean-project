@@ -457,11 +457,13 @@
                 }
             });
 
-        if ($scope.current_groupe != null){
+        if ($scope.friend_name == null){
                $scope.show_list_group($scope.current_groupe);
         }
         else{
+            console.log("test");
             $scope.show_listbill_friend($scope.friend_name);
+            display_list = false;
         }
         $scope.review = $scope.total_balance();
         $scope.close_bill();
