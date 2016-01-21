@@ -2,7 +2,11 @@
   "name": "mean-project",
   "version": "0.5.2",
   "description": "Project to learn MEAN stack",
-  "main": "app.js",
+  "main": "server/app.js",
+  "repository" : { 
+    "type" : "git", 
+    "url" : "https://github.com/rjorel/mean-project.git"
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "mongodb": "^2.0.48",
