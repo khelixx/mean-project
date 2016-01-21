@@ -3,7 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
 
-var url = "mongodb://localhost/test";
+var url = "mongodb://localhost/rjorel_mean-project";
 
 
 var app = express();
