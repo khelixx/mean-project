@@ -352,8 +352,10 @@
 
                             <strong><span><i class="glyphicon glyphicon-pencil"></i>  Bill comments </span></strong>
                             <div ng-repeat="comment in bills.comm track by $index">
-                                Message : <span ng-bind="comment.comment"/>  
-                                <button href ng-click="delete_comm(comment)"> Delete </button></br>
+                                <strong>Comment :</strong> <span ng-bind="comment.comment"/>  
+                                <button ng-click="delete_comm(comment)" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-trash"></i> 
+                                        Delete message
+                                </button> </br>
                             </div></br>
 
                             <textarea cols="50" rows="4" ng-keypress="($event.which === 13)?add_comm(comment, bills.description, bills.price):0" ng-model="comment"> </textarea>
