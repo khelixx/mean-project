@@ -304,6 +304,7 @@
             $scope.number_payers = 0;
             $scope.opacity = 1;
             count_payers_init = false;
+            display_list = false;
             angular.element("#transparency")[0].style.opacity = 1;
             update = "none";
         }
