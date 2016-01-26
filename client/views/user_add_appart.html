@@ -1,20 +1,22 @@
 
 <div ng-include="'views/inc/user_menu.html'"></div>
+<div ng-class="'assets/css/style.css'"></div>
 
-<div class="container col-md-12" ng-controller="UserAddGroupCtrl">
-    <form ng-submit="add_group()" novalidate>
-        <div class="container col-md-6">
+<div class="container col-md-12" ng-controller="UserAddAppartCtrl">
+    <div id="form_appart">
+        <form ng-submit="add_appart()" novalidate>
+         <div class="container col-md-6">
             <div class="panel panel-default">
                 <div class="panel panel-heading">
-                    <h3>Group </h3>
+                    <h3>Apartment </h3>
                 </div>
                 <div class="panel-body">
                     <span class="red" ng-bind="alert"></span></br>
-                    <strong>Group owner email : </strong> <span ng-bind="user.email"></span></br></br>
-                    <label> Group name <span class="red" >*</span> : </label>
-                    <input type="text" ng-model="group_name" class="form-control"
-                    placeholder="Enter a group name" required autofocus></br>
-                    <button class="btn btn-success " type="submit"><i class="glyphicon glyphicon-plus"></i>  Add group</button>
+                    <strong>Apartment owner email : </strong> <span ng-bind="{{ current_user }}"></span></br></br>
+                    <label> Apartment name <span class="red" >*</span> : </label>
+                    <input type="text" ng-model="user_appartement" class="form-control"
+                    placeholder="Enter a appartment name" required autofocus></br>
+                    <button class="btn btn-success " type="submit"><i class="glyphicon glyphicon-plus"></i>  Add appartment</button>
                 </div>
             </div>
             <span class="red">* required</span>
@@ -38,4 +40,4 @@
         </div>
     </form>
 </div>
-
+</div>

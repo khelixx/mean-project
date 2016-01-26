@@ -1,8 +1,12 @@
 {
-  "name": "mean-server",
-  "version": "0.0.0",
-  "description": "",
-  "main": "app.js",
+  "name": "mean-project",
+  "version": "0.5.2",
+  "description": "Project to learn MEAN stack",
+  "main": "server/app.js",
+  "repository" : { 
+    "type" : "git", 
+    "url" : "https://github.com/rjorel/mean-project.git"
+  },
   "dependencies": {
     "body-parser": "^1.14.1",
     "mongodb": "^2.0.48",
@@ -11,8 +15,9 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "node server/app.js"
+    "start": "node server/app.js",
+    "postinstall": "mongo rjorel_mean-project < misc/script.js && bower install"
   },
-  "author": "",
+  "author": "alaulan, khelixx, rjorel",
   "license": "ISC"
 }

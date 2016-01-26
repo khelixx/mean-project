@@ -1,4 +1,3 @@
-
 (function() {
     'use strict';
 
@@ -42,75 +41,37 @@
                 controller: 'UserAddGroupCtrl'
             })
 
+            .when('/user/add_appart', {
+                templateUrl: "views/user_add_appart.html",
+                controller:'UserAddAppartCtrl'
+            })
+
+            .when('/user/update_group', {
+                templateUrl: "views/user_update_group.html",
+                controller:'UserUpdateGroupCtrl'
+            })
+
             .otherwise({ redirectTo: '/' });
 
     }]);
 
     // For communication.
+    // E-mail address is used as id.
     app.factory('UserFactory', ['$resource', function($res) {
-        return $res('/user/:email/:passwd', { }, {
+        return $res('/user/:email/:passwd', {  }, {
             update: {
                 method: 'PUT'
             }
         });
     }]);
 
+    app.controller('UserUpdateCtrl', function($scope, $rootScope, $location, $routeParams, UserFactory) {
 
-    // And now, the controllers.
-    app.controller('MainCtrl', ['$scope', function($scope) {
-
-    }]);
-
-    app.controller('LoginCtrl', function($scope, $rootScope, $location, UserFactory) {
-        $scope.login = function() {
-            UserFactory.get({ email: $scope.email, passwd: $scope.passwd }, function(user) {
-                $scope.alert = "";
-
-                if (user.email) {
-                    $rootScope.user = user;
-                    $location.url("/user");
-                }
-                else
-                    $scope.alert = "Are you killing me ? Go register you before trying the website..."
-            });
+        $scope.value = angular.fromJson($location.search().array);
+        $scope.update_group = function(){
+            // Get user in database to update it. Strangely, even the user comes from database, it's
+            // not possible to update it directly (or I didn't do the good method).
+            console.log($routeParams.id)
         }
     });
-
-    app.controller('RegisterCtrl', function($scope, $location, $rootScope, UserFactory) {
-        $scope.register = function() {
-            var user = new UserFactory({
-                email: $scope.email,
-                passwd: $scope.passwd
-            });
-
-            user.$save(function(res) {
-                $scope.alert = "";
-
-                if (res.email) {
-                    $rootScope.user = res;
-                    $location.url("/user");
-                }
-                else
-                    $scope.alert = "Another person uses this address ! You are not the lonely one who wants his money...";
-
-            });
-        }
-    });
-
-    app.controller('LogoutCtrl', function($scope, $rootScope) {
-        $scope.truc = "truc";
-    });
-
-    app.controller('UserCtrl', function($scope) {
-
-    });
-
-    app.controller('UserSettingsCtrl', function($scope) {
-
-    });
-
-    app.controller('UserAddGroupCtrl', function($scope) {
-
-    });
-
 })();

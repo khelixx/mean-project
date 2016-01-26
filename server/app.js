@@ -3,7 +3,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
 
-var url = "mongodb://localhost/test";
+var url = "mongodb://localhost/rjorel_mean-project";
 
 
 var app = express();
@@ -33,7 +33,13 @@ var Schema = mongoose.Schema;
 // User definition (just a email and a password for the moment).
 var UserSchema = new Schema({
     email: String,
-    passwd: String
+    passwd: String,
+    groups: Array,
+    settings: {
+        name: {type: String, default: ""},
+        firstname: {type: String, default: ""},
+        phone: {type: String, default: ""}
+    }
 });
 
 // Models
@@ -65,3 +71,19 @@ app.post('/user', function(req, res) {
         }
     })
 });
+
+app.put('/user', function(req, res) {
+    UserModel.findOne({ email: req.body.email }, function (err, user){
+        user.groups = req.body.groups;
+        user.settings = req.body.settings;
+        user.save();
+    });
+});
+
+app.get('/remove', function(req, res) {
+    UserModel.find(function(err,data){ 
+        res.send(data);
+    });
+});
+
+
